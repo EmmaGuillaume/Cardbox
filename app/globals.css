@@ -8,24 +8,24 @@ body {
   font-family: var(--font-merryweather);
 }
 :root {
-    --background: oklch(11.80% 0.042 269.43);
-    --background-400: oklch(83.75% 0.012 259.82);
-    --background-500: oklch(67.32% 0.030 276.61);
-    --background-600: oklch(50.75% 0.034 276.66);
-    --background-700: oklch(38.74% 0.034 275.86);
-    --background-800: oklch(26.42% 0.024 277.77);
-    --background-900: oklch(18.91% 0.033 277.37);
-    --primary: oklch(96.41% 0.004 91.45);
-    --red: oklch(72.61% 0.172 14.14);
-    --yellow: oklch(96.64% 0.163 112.43);
-    --blue: oklch(77.59% 0.121 246.67);
+    --color-background: oklch(11.80% 0.042 269.43);
+    --color-background-400: oklch(83.75% 0.012 259.82);
+    --color-background-500: oklch(67.32% 0.030 276.61);
+    --color-background-600: oklch(50.75% 0.034 276.66);
+    --color-background-700: oklch(38.74% 0.034 275.86);
+    --color-background-800: oklch(26.42% 0.024 277.77);
+    --color-background-900: oklch(18.91% 0.033 277.37);
+    --color-primary: oklch(96.41% 0.004 91.45);
+    --color-red: oklch(72.61% 0.172 14.14);
+    --color-yellow: oklch(96.64% 0.163 112.43);
+    --color-blue: oklch(77.59% 0.121 246.67);
     --font-krub: "Krub", sans-serif;
     --font-merryweather: "Merriweather", serif;
   }
 
 
 @theme inline {
-  --color-background: var(--background);
+  --color-background: var(--color-background);
   --color-background-400: var(--color-background-400);
   --color-background-500: var(--color-background-500);
   --color-background-600: var(--color-background-600);
