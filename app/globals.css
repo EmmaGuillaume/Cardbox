@@ -1,9 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  background-color: var(--color-background-400);
+  color: var(--color-primary);
+  font-family: var(--font-merryweather);
 }
+:root {
+    --background: oklch(11.80% 0.042 269.43);
+    --background-400: oklch(83.75% 0.012 259.82);
+    --background-500: oklch(67.32% 0.030 276.61);
+    --background-600: oklch(50.75% 0.034 276.66);
+    --background-700: oklch(38.74% 0.034 275.86);
+    --background-800: oklch(26.42% 0.024 277.77);
+    --background-900: oklch(18.91% 0.033 277.37);
+    --primary: oklch(96.41% 0.004 91.45);
+    --red: oklch(72.61% 0.172 14.14);
+    --yellow: oklch(96.64% 0.163 112.43);
+    --blue: oklch(77.59% 0.121 246.67);
+    --font-krub: "Krub", sans-serif;
+    --font-merryweather: "Merriweather", serif;
+  }
+
 
 @theme inline {
   --color-background: var(--background);
@@ -17,8 +36,8 @@
   --color-red: var(--color-red);
   --color-yellow: var(--color-yellow);
   --color-blue: var(--color-blue);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-krub: "Krub", sans-serif;
+  --font-merryweather: "Merriweather", serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -35,10 +54,4 @@
     --color-yellow: oklch(96.64% 0.163 112.43);
     --color-blue: oklch(77.59% 0.121 246.67);
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
