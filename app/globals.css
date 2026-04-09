@@ -2,11 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
 @import "tailwindcss";
 
-body {
-  background-color: var(--color-background-400);
-  color: var(--color-primary);
-  font-family: var(--font-merryweather);
-}
 :root {
     --color-background: oklch(11.80% 0.042 269.43);
     --color-background-400: oklch(83.75% 0.012 259.82);
