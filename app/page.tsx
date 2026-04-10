@@ -2,6 +2,7 @@
 import ButtonInterract from "@/components/ui/ButtonInterract";
 import Image from "next/image";
 import { useState } from "react";
+import TapBar from "@/components/ui/TapBar";
 
 export default function Home() {
   const [isClicked, setIsClicked] = useState(false);
@@ -23,6 +24,7 @@ export default function Home() {
         type="list"
         isAlreadyAdded={isClicked}
       />
+      <TapBar></TapBar>
     </div>
   );
 }
