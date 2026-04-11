@@ -11,7 +11,7 @@ const Header = ({}: Props) => {
   return (
     <div className="border-b text-primary border-b-background-800 w-full z-50 flex justify-between items-center gap-2 bg-background px-16 py-4">
       <Link className="w-2/12" href="/">
-        <Image src="/logo-cardbox.png" alt="" width={200} height={100} />
+        <Image src="/logo-cardbox.png" className="w-full h-full" alt="" width={1000} height={100} />
       </Link>
       <div className="flex gap-4 items-center w-9/12 justify-end">
         <Searchbar setInput={setInput} input={input} />
