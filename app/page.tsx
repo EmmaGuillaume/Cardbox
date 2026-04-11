@@ -27,7 +27,7 @@ export default function Home() {
 
           <ItemSearch
             type="human"
-            humanRole="Actor"
+            humanRole="Réalisateur"
             humanName="Tony Leung"
             humanImageURL="https://media.gq.com/photos/612be4ed73b9651b2559a70e/master/pass/tony-leung-gq-october-2021-07.jpg"
           />

@@ -3,6 +3,7 @@ import "./globals.css";
 import TapBar from "@/components/ui/TapBar";
 import NavBarMobile from "@/components/ui/NavBarMobile";
 import NavBarDesktop from "@/components/ui/NavBarDesktop";
+import Header from "@/components/features/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,14 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="fr"
-    >
+    <html lang="fr">
       <body className="min-h-full flex flex-col">
+        <Header />
+        
         <NavBarMobile/>
         <NavBarDesktop/>
         {children}
         <TapBar/>
+      
       </body>
     </html>
   );

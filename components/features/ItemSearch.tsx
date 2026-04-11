@@ -21,9 +21,9 @@ const ItemSearch = ({
 }: Props) => {
   if (type === "film" || type === "serie") {
     return (
-      <div className="bg-background w-full rounded-md flex flex-wrap justify-center md:justify-between items-center p-2 text-primary">
-        <div className="flex items-center gap-4">
-          <img src={filmImageURL} alt={title} className="w-12 rounded-sm" />
+      <div className="bg-background  w-full rounded-md flex flex-wrap justify-center md:justify-between items-center p-2 text-primary">
+        <div className="flex items-center gap-2">
+          <img src={filmImageURL} alt={title} className="w-10 rounded-sm" />
           <div>
             <h2 className="md:text-lg font-krub font-light">{title}</h2>
             <div className="flex flex-nowrap gap-2 opacity-80">
@@ -56,8 +56,8 @@ const ItemSearch = ({
   } else if (type === "human") {
     return (
       <div className="bg-background w-full rounded-md flex flex-wrap justify-center md:justify-between items-center p-2 text-primary">
-        <div className="flex items-center gap-4">
-          <img src={humanImageURL} alt={humanName} className="w-12 rounded-sm" />
+        <div className="flex items-center gap-2">
+          <img src={humanImageURL} alt={humanName} className="w-10 rounded-sm" />
           <div>
             <h2 className="md:text-lg font-krub font-light">{humanName}</h2>
             <div className="flex flex-nowrap gap-2 opacity-80">
