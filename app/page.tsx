@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <h1>Accueil</h1>
-      <div className="bg-background min-h-screen flex flex-col items-center justify-center">
+      <div className="bg-background min-h-screen flex flex-col gap-8 items-center justify-center">
         <FilmCard
           title="In the mood for love"
           realisateur="Wong Kar-wai"
@@ -30,6 +30,13 @@ export default function Home() {
             humanRole="Actor"
             humanName="Tony Leung"
             humanImageURL="https://media.gq.com/photos/612be4ed73b9651b2559a70e/master/pass/tony-leung-gq-october-2021-07.jpg"
+          />
+
+          <ItemSearch
+            type="serie"
+            title="Breaking Bad"
+            filmDirector="Vince Gilligan"
+            filmImageURL="https://m.media-amazon.com/images/M/MV5BMzU5ZGYzNmQtMTdhYy00OGRiLTg0NmQtYjVjNzliZTg1ZGE4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
           />
         </div>
       </div>
