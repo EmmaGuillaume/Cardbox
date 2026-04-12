@@ -1,0 +1,143 @@
+"use client";
+import { useState, useRef, useEffect } from "react";
+import { ChevronDown, Search } from "lucide-react";
+import Link from "next/link";
+import { Trophy, List, Telescope } from "lucide-react";
+
+const items = [
+  { label: "Top films", icon: Trophy, link: "/top-films" },
+  { label: "Listes", icon: List, link: "/profile/1/listes" },
+  { label: "Découvrir", icon: Telescope, link: "/" },
+];
+
+export default function NavBarDesktop() {
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [dropdownOpen, setDiscoverOpen] = useState(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      )
+        setDiscoverOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  return (
+    <>
+      <nav className="hidden lg:grid grid-cols-[1fr_2fr_1fr] items-center h-16 w-full fixed top-0 z-10 bg-background-900/80 backdrop-blur-lg text-primary font-krub px-6 border-b border-background-800">
+        {/* LEFT */}
+        <Link href="/" className="flex items-center gap-2">
+          <svg width="65" height="23" viewBox="0 0 65 23">
+            <ellipse
+              cx="12.1078"
+              cy="11.5"
+              rx="12.1078"
+              ry="11.5"
+              fill="#FF7285"
+            />
+            <ellipse
+              cx="32.4999"
+              cy="11.5"
+              rx="12.1078"
+              ry="11.5"
+              fill="#F6FF72"
+            />
+            <ellipse
+              cx="52.892"
+              cy="11.5"
+              rx="12.1078"
+              ry="11.5"
+              fill="#72BDFF"
+            />
+          </svg>
+          <span className="text-2xl font-extrabold">Cardbooxd</span>
+        </Link>
+
+        {/* CENTER */}
+        <div className="flex justify-center px-6">
+          <div className="flex items-center gap-2 bg-background-800 rounded-full px-4 py-2 w-full transition-colors border border-transparent hover:border-background-600">
+            <Search className="w-4 h-4 opacity-70" />
+            <input
+              type="text"
+              placeholder="Rechercher un film, une série, un·e artiste…"
+              className="bg-transparent outline-none w-full text-sm"
+            />
+          </div>
+        </div>
+
+        {/* RIGHT */}
+        <div className="flex items-center justify-end gap-3 text-md">
+          {/* Dropdown */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setDiscoverOpen((v) => !v)}
+              className={`flex items-center gap-2.5 bg-background-800 border rounded-md py-1.5 px-3 transition-colors cursor-pointer ${
+                dropdownOpen
+                  ? "border-background-600"
+                  : "border-transparent hover:border-background-600"
+              }`}
+            >
+              Découvrir
+              <ChevronDown
+                className={`w-3 h-3 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+
+            <div
+              className={`absolute right-0 top-[calc(100%+5px)] w-48 bg-background-900 border border-background-600 rounded-md overflow-hidden z-50 transition-all duration-200 origin-top-right ${
+                dropdownOpen
+                  ? "opacity-100 scale-100 translate-y-0"
+                  : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+              }`}
+            >
+              <div className="p-1.5">
+                {items.map(({ label, icon: Icon, link }) => (
+                  <Link
+                    key={label}
+                    href={link}
+                    className="flex items-center gap-2 px-3 py-2 text-sm text-primary/70 hover:bg-background-800 hover:text-primary transition-colors"
+                  >
+                    <Icon className="w-4 h-4" />
+                    {label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Profil */}
+          <button
+            onClick={() => setProfileOpen((v) => !v)}
+            className={`flex items-center gap-2.5 bg-background-800 border rounded-full pl-3.5 pr-1.5 py-1.5 transition-colors cursor-pointer ${
+              profileOpen
+                ? "border-background-600"
+                : "border-transparent hover:border-background-600"
+            }`}
+          >
+            <div className="w-4.5 h-3 flex flex-col justify-between">
+              <span
+                className={`block h-px rounded-full bg-primary/60 transition-all duration-200 origin-center ${profileOpen ? "translate-y-[5.5px] rotate-45" : ""}`}
+              />
+              <span
+                className={`block h-px rounded-full bg-primary/60 transition-all duration-200 ${profileOpen ? "opacity-0 scale-x-0" : ""}`}
+              />
+              <span
+                className={`block h-px rounded-full bg-primary/60 transition-all duration-200 origin-center ${profileOpen ? "-translate-y-[5.5px] -rotate-45" : ""}`}
+              />
+            </div>
+            <div className="w-7 h-7 rounded-full bg-[#F6FF72] flex items-center justify-center text-[11px] font-bold text-black">
+              CT
+            </div>
+          </button>
+        </div>
+      </nav>
+      <div className="hidden lg:block h-16" />
+    </>
+  );
+}
