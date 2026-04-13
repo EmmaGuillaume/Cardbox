@@ -60,8 +60,7 @@ export default function NavBarDesktop() {
         </Link>
 
         {/* CENTER */}
-        <div className="flex justify-center px-6">
-          <div className="flex items-center gap-2 bg-background-800 rounded-full px-4 py-2 w-full transition-colors border border-transparent hover:border-background-600">
+          <div className="flex justify-center mx-6 items-center gap-2 bg-background-800 rounded-full px-4 py-2 w-full transition-colors border border-transparent hover:border-background-600 focus-within:border-background-600">
             <Search className="w-4 h-4 opacity-70" />
             <input
               type="text"
@@ -69,7 +68,6 @@ export default function NavBarDesktop() {
               className="bg-transparent outline-none w-full text-sm"
             />
           </div>
-        </div>
 
         {/* RIGHT */}
         <div className="flex items-center justify-end gap-3 text-md">
