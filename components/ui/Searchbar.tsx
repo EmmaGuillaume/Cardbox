@@ -43,7 +43,7 @@ const Searchbar = ({ input, setInput }: SearchbarProps) => {
         value={input}
       />
       <div
-        className={`backdrop-blur-lg w-full flex flex-col gap-2 absolute z-40 bg-background-800/65 ${isSelected ? "visible opacity-100" : " opacity-0 "} top-12 rounded-b-md px-4 py-6 text-primary transition-opacity duration-300`}
+        className={`backdrop-blur-lg w-full flex flex-col gap-2 absolute z-40 bg-background-800/65 ${isSelected ? "visible opacity-100" : " opacity-0 pointer-events-none"} top-12 rounded-b-md px-4 py-6 text-primary transition-opacity duration-300`}
       >
         <ItemSearch
           type="film"
