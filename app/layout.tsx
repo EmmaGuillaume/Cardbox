@@ -3,6 +3,7 @@ import "./globals.css";
 import TapBar from "@/components/features/TapBar";
 import NavBarMobile from "@/components/features/NavBarMobile";
 import NavBarDesktop from "@/components/features/NavBarDesktop";
+import Footer from "@/components/ui/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,6 +24,9 @@ export default function RootLayout({
         <NavBarDesktop/>
         {children}
         <TapBar/>
+        <footer>
+            <Footer />
+        </footer>
       
       </body>
     </html>
