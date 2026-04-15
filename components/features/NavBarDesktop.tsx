@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Search, Trophy, List, Telescope } from "lucide-react";
 import Link from "next/link";
 import Searchbar from "../ui/Searchbar";
+import { useDrawer } from "../context/DrawerContext";
 
 const items = [
   { label: "Top films", icon: Trophy, link: "/top-films" },
@@ -11,7 +12,7 @@ const items = [
 ];
 
 export default function NavBarDesktop() {
-  const [profileOpen, setProfileOpen] = useState(false);
+  const { open, setOpen } = useDrawer();
   const [dropdownOpen, setDiscoverOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -108,11 +109,11 @@ export default function NavBarDesktop() {
 
           {/* Profile */}
           <button
-            onClick={() => setProfileOpen((v) => !v)}
+            onClick={() => setOpen(!open)}
             aria-label="Ouvrir le menu du profil"
-            aria-expanded={profileOpen}
+            aria-expanded={open}
             className={`flex items-center gap-2.5 bg-background-800 border rounded-full pl-3.5 pr-1.5 py-1.5 transition-colors cursor-pointer ${
-              profileOpen
+              open
                 ? "border-background-600"
                 : "border-transparent hover:border-background-600"
             }`}
@@ -120,17 +121,17 @@ export default function NavBarDesktop() {
             <div className="w-4.5 h-3 flex flex-col justify-between" aria-hidden="true">
               <span
                 className={`block h-px rounded-full bg-primary/60 transition-all duration-200 origin-center ${
-                  profileOpen ? "translate-y-[5.5px] rotate-45" : ""
+                  open ? "translate-y-[5.5px] rotate-45" : ""
                 }`}
               />
               <span
                 className={`block h-px rounded-full bg-primary/60 transition-all duration-200 ${
-                  profileOpen ? "opacity-0 scale-x-0" : ""
+                  open ? "opacity-0 scale-x-0" : ""
                 }`}
               />
               <span
                 className={`block h-px rounded-full bg-primary/60 transition-all duration-200 origin-center ${
-                  profileOpen ? "-translate-y-[5.5px] -rotate-45" : ""
+                  open ? "-translate-y-[5.5px] -rotate-45" : ""
                 }`}
               />
             </div>

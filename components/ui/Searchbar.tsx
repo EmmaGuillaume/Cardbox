@@ -38,7 +38,7 @@ const Searchbar = ({ input, setInput }: SearchbarProps) => {
         onChange={(e) => setInput && setInput(e.target.value)}
         onClick={() => setIsSelected(true)}
         type="text"
-        placeholder="Search a film, genre, actor ..."
+        placeholder="Rechercher un film, un genre un·e artiste…"
         className="px-4 py-1 bg-transparent w-full focus:outline-none text-primary"
         value={input}
       />

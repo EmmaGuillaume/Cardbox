@@ -34,7 +34,7 @@ const ItemSearch = ({
           </div>
         </div>
 
-        <div className="flex gap-4 items-center mt-2 md:mt-0">
+        <div className="flex gap-4 items-center mt-2 md:mt-0 mr-4">
           <ButtonInterract
             isAlreadyAdded={false}
             type="list"
@@ -57,7 +57,7 @@ const ItemSearch = ({
     return (
       <div className="bg-background w-full rounded-md flex flex-wrap justify-center md:justify-between items-center p-2 text-primary">
         <div className="flex items-center gap-2">
-          <img src={humanImageURL} alt={humanName} className="w-10 rounded-sm" />
+          <img src={humanImageURL} alt={humanName} className="w-10 h-10 object-cover rounded-full" />
           <div>
             <h2 className="md:text-lg font-krub font-light">{humanName}</h2>
             <div className="flex flex-nowrap gap-2 opacity-80">
@@ -66,7 +66,7 @@ const ItemSearch = ({
           </div>
         </div>
 
-        <div className="flex gap-4 items-center mt-2 md:mt-0">
+        <div className="flex gap-4 items-center mt-2 md:mt-0 bg-text primary mr-4">
           <ButtonInterract
             isAlreadyAdded={false}
             type="like"
