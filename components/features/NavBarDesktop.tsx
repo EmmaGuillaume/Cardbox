@@ -34,7 +34,7 @@ export default function NavBarDesktop() {
   return (
     <>
       <nav
-        className="hidden lg:grid grid-cols-[1fr_2fr_1fr] items-center h-16 w-full fixed top-0 z-10 bg-background-900/80 backdrop-blur-lg text-primary font-krub px-6 border-b border-background-800"
+        className="hidden lg:grid grid-cols-[1fr_2fr_1fr] items-center h-16 w-full fixed top-0 z-30 bg-background-900/80 backdrop-blur-lg text-primary font-krub px-6 border-b border-background-800"
         aria-label="Navigation principale"
       >
         {/* LEFT */}
