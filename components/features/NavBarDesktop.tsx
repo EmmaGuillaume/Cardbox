@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Search, Trophy, List, Telescope } from "lucide-react";
 import Link from "next/link";
+import Searchbar from "../ui/Searchbar";
 
 const items = [
   { label: "Top films", icon: Trophy, link: "/top-films" },
@@ -50,19 +51,9 @@ export default function NavBarDesktop() {
         
 
         {/* CENTER (Search) */}
-        <div className="flex justify-center mx-6 items-center gap-2 bg-background-800 rounded-full px-4 py-2 w-full border border-transparent focus-within:border-background-600">
-          <Search className="w-4 h-4 opacity-70" aria-hidden="true" />
-          
-          <label htmlFor="search" className="sr-only">
-            Rechercher un film, une série ou un artiste
-          </label>
-          <input
-            id="search"
-            type="text"
-            placeholder="Rechercher un film, une série, un·e artiste…"
-            className="bg-transparent outline-none w-full text-sm"
-          />
-        </div>
+     
+
+        <Searchbar input="" />
 
         {/* RIGHT */}
         <div className="flex items-center justify-end gap-3 text-md">
