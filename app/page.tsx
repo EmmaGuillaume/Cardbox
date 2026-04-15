@@ -5,7 +5,6 @@ import ItemSearch from "@/components/features/ItemSearch";
 export default function Home() {
   return (
     <>
-      <h1>Accueil</h1>
       <div className="bg-background min-h-screen flex flex-col gap-8 items-center justify-center">
         <FilmCard
           title="In the mood for love"

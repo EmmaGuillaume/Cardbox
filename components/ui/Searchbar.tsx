@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import ItemSearch from "./ItemSearch";
+import ItemSearch from "../features/ItemSearch";
+import { Search } from "lucide-react";
 
 type SearchbarProps = {
   input: string;
@@ -14,7 +15,10 @@ const Searchbar = ({ input, setInput }: SearchbarProps) => {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         setIsSelected(false);
       }
     };
@@ -26,19 +30,20 @@ const Searchbar = ({ input, setInput }: SearchbarProps) => {
   return (
     <div
       ref={containerRef}
-      className={`relative transition-all duration-300 rounded-full bg-background-800 flex items-center gap-2 ${isSelected ? "w-full" : "w-1/3"}`}
+      className={`relative transition-all duration-300 rounded-full bg-background-800 flex items-center  border border-transparent focus-within:border-background-600 w-full `}
     >
+
+      <Search className="w-4 h-4 opacity-70 ml-4" aria-hidden="true" />
       <input
         onChange={(e) => setInput && setInput(e.target.value)}
         onClick={() => setIsSelected(true)}
         type="text"
         placeholder="Search a film, genre, actor ..."
-        className="px-4 py-2 bg-transparent w-full focus:outline-none text-primary"
+        className="px-4 py-1 bg-transparent w-full focus:outline-none text-primary"
         value={input}
       />
-
       <div
-        className={`backdrop-blur-xs w-full flex flex-col gap-2 absolute z-40 bg-background-800/65 ${isSelected ? "visible opacity-100" : " opacity-0 "} top-14 rounded-b-md px-4 py-6 text-primary transition-opacity duration-300`}
+        className={`backdrop-blur-lg w-full flex flex-col gap-2 absolute z-40 bg-background-800/65 ${isSelected ? "visible opacity-100" : " opacity-0 "} top-12 rounded-b-md px-4 py-6 text-primary transition-opacity duration-300`}
       >
         <ItemSearch
           type="film"
