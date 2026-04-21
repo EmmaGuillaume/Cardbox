@@ -17,7 +17,7 @@ export default function Home() {
           list={5}
           IsUserFollowed={true}
           unfollowUser={() => console.log("Unfollowed John Doe")}
-        />z
+        />
         <div className="flex gap-8">
           <FilmReview
             persona="user"
