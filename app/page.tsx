@@ -1,85 +1,161 @@
 "use client";
 import FilmCard from "@/components/features/FilmCard";
 import FilmReview from "@/components/features/FilmReview";
-import ItemSearch from "@/components/features/ItemSearch";
+import ScrollSection from "@/components/features/ScrollSection";
+
+import { useRef, useState } from "react";
 
 export default function Home() {
+  const [username] = useState("Clémeninou");
+
+  const FakeDataBaseFilmList = [
+    {
+      title: "Le Seigneur des Anneaux",
+      realisateur: "Peter Jackson",
+      date: "2001",
+      imageURL:
+        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
+      rating: 5,
+      review:
+        "Un chef-d'œuvre épique qui transporte les spectateurs dans un monde fantastique rempli d'aventures, de courage et d'amitié. Les performances des acteurs, les effets visuels et la bande sonore sont tout simplement incroyables. Un incontournable pour les fans de fantasy !",
+    },
+    {
+      title: "The Dark Knight",
+      realisateur: "Christopher Nolan",
+      date: "2008",
+      imageURL:
+        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
+      rating: 3,
+      review:
+        "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
+    },
+    {
+      title: "Le Seigneur des Anneaux",
+      realisateur: "Peter Jackson",
+      date: "2001",
+      imageURL:
+        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
+      rating: 2,
+      review:
+        "Un chef-d'œuvre épique qui transporte les spectateurs dans un monde fantastique rempli d'aventures, de courage et d'amitié. Les performances des acteurs, les effets visuels et la bande sonore sont tout simplement incroyables. Un incontournable pour les fans de fantasy !",
+    },
+    {
+      title: "The Dark Knight",
+      realisateur: "Christopher Nolan",
+      date: "2008",
+      imageURL:
+        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
+      rating: 4.8,
+      review:
+        "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
+    },
+    {
+      title: "Le Seigneur des Anneaux",
+      realisateur: "Peter Jackson",
+      date: "2001",
+      imageURL:
+        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
+      rating: 1,
+      review:
+        "Un chef-d'œuvre épique qui transporte les spectateurs dans un monde fantastique rempli d'aventures, de courage et d'amitié. Les performances des acteurs, les effets visuels et la bande sonore sont tout simplement incroyables. Un incontournable pour les fans de fantasy !",
+    },
+    {
+      title: "The Dark Knight",
+      realisateur: "Christopher Nolan",
+      date: "2008",
+      imageURL:
+        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
+      rating: 5,
+      review:
+        "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
+    },
+    {
+      title: "The Dark Knight",
+      realisateur: "Christopher Nolan",
+      date: "2008",
+      imageURL:
+        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
+      rating: 2,
+      review:
+        "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
+    },
+    {
+      title: "The Dark Knight",
+      realisateur: "Christopher Nolan",
+      date: "2008",
+      imageURL:
+        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
+      rating: 4,
+      review:
+        "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
+    },
+  ];
   return (
-    <>
-      <div className="bg-background min-h-screen flex flex-col gap-8 items-center justify-center">
-        <div className="flex gap-8">
-          <FilmReview
-            persona="user"
-            title="In the mood for love"
-            realisateur="Wong Kar-wai"
-            date="2000"
-            imageURL="https://i.pinimg.com/736x/60/f5/26/60f526f8b6eef36c5dc933c706ae2b7c.jpg"
-            isLiked={true}
-            isInWatchlist={true}
-            isSeen={true}
-            review="This is a great film!"
-          ></FilmReview>
-
-          <FilmReview
-            persona="user"
-            title="In the mood for love"
-            realisateur="Wong Kar-wai"
-            date="2000"
-            imageURL="https://i.pinimg.com/736x/60/f5/26/60f526f8b6eef36c5dc933c706ae2b7c.jpg"
-            isLiked={true}
-            isInWatchlist={false}
-            isSeen={true}
-          ></FilmReview>
-
-          <FilmReview
-            persona="friend"
-            title="In the mood for love"
-            realisateur="Wong Kar-wai"
-            date="2000"
-            imageURL="https://i.pinimg.com/736x/60/f5/26/60f526f8b6eef36c5dc933c706ae2b7c.jpg"
-            isLiked={true}
-            isInWatchlist={false}
-            isSeen={true}
-            rating={2}
-          ></FilmReview>
-
-          <FilmReview
-            persona="friend"
-            title="In the mood for love"
-            realisateur="Wong Kar-wai"
-            date="2000"
-            imageURL="https://i.pinimg.com/736x/60/f5/26/60f526f8b6eef36c5dc933c706ae2b7c.jpg"
-            isLiked={true}
-            isInWatchlist={true}
-            isSeen={false}
-            rating={5}
-            review="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt risus aliquam, suscipit lectus id, convallis dolor. Nam auctor ante nec dolor feugiat, in scelerisque metus faucibus. Aliquam tincidunt, nulla ac posuere dignissim, augue lectus dapibus risus, eu vestibulum mi orci eget quam. Fusce auctor elementum enim, ac tempus ante varius at. In nec massa a tellus tempus auctor et et lorem. Quisque congue laoreet consectetur. Nullam rutrum leo eget lacus aliquam, sed tempor elit tincidunt."
-          ></FilmReview>
-        </div>
-
-        <div className="flex flex-col w-1/2 bg-background-800/85 gap-2 p-2 rounded-md">
-          <ItemSearch
-            type="film"
-            title="In the mood for love"
-            filmDirector="Wong Kar-wai"
-            filmImageURL="https://i.pinimg.com/736x/60/f5/26/60f526f8b6eef36c5dc933c706ae2b7c.jpg"
-          />
-
-          <ItemSearch
-            type="human"
-            humanRole="Réalisateur"
-            humanName="Tony Leung"
-            humanImageURL="https://media.gq.com/photos/612be4ed73b9651b2559a70e/master/pass/tony-leung-gq-october-2021-07.jpg"
-          />
-
-          <ItemSearch
-            type="serie"
-            title="Breaking Bad"
-            filmDirector="Vince Gilligan"
-            filmImageURL="https://m.media-amazon.com/images/M/MV5BMzU5ZGYzNmQtMTdhYy00OGRiLTg0NmQtYjVjNzliZTg1ZGE4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
-          />
-        </div>
+    <div className="bg-background min-h-screen flex gap-8 flex-col md:px-32 px-4 text-primary font-krub mb-24">
+      <div className="mt-8">
+        <h1 className="text-primary font-merryweather flex gap-2 text-2xl">
+          Bon retour, <p className="text-yellow">{username}</p> !
+        </h1>
+        <p className="font-extralight text-sm">
+          Voici l'activité pendant votre absence… <br />
+          Cette page d'accueil s'adaptera à vos goûts!
+        </p>
       </div>
-    </>
+
+      <ScrollSection
+        title={
+          <>
+            Films <span className="text-red">you</span> may like
+          </>
+        }
+      >
+        {FakeDataBaseFilmList.map((film, index) => (
+          <FilmCard
+            key={index}
+            {...film}
+            isLiked={false}
+            isInWatchlist={false}
+            isSeen={false}
+          />
+        ))}
+      </ScrollSection>
+
+      <ScrollSection
+        title={
+          <>
+            <span className="text-yellow">Friends</span> activities
+          </>
+        }
+      >
+        {FakeDataBaseFilmList.map((film, index) => (
+          <FilmReview
+            key={index}
+            persona="friend"
+            {...film}
+            isLiked={false}
+            isInWatchlist={false}
+            isSeen={false}
+          />
+        ))}
+      </ScrollSection>
+
+      <ScrollSection
+        title={
+          <>
+            Latest <span className="text-blue">releases</span>
+          </>
+        }
+      >
+        {FakeDataBaseFilmList.map((film, index) => (
+          <FilmCard
+            key={index}
+            {...film}
+            isLiked={false}
+            isInWatchlist={false}
+            isSeen={false}
+          />
+        ))}
+      </ScrollSection>
+    </div>
   );
 }
