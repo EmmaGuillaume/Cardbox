@@ -49,7 +49,7 @@ export default function NavBarDesktop() {
             <span className="text-2xl font-extrabold">Cardbooxd</span>
           </Link>
         </div>
-        
+
 
         {/* CENTER (Search) */}
      

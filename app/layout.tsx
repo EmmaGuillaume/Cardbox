@@ -5,6 +5,7 @@ import NavBarMobile from "@/components/features/NavBarMobile";
 import NavBarDesktop from "@/components/features/NavBarDesktop";
 import UserDrawerDesktop from "@/components/features/UserDrawerDesktop";
 import { DrawerProvider } from "@/components/context/DrawerContext";
+import Footer from "@/components/ui/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,6 +26,9 @@ export default function RootLayout({
           <div className="flex flex-1 overflow-hidden fixed top-16 left-0 right-0 bottom-0">
             <main className="flex-1 overflow-y-auto">
               {children}
+              <footer>
+                <Footer />
+              </footer>
             </main>
             <UserDrawerDesktop />
           </div>
