@@ -21,7 +21,7 @@ const FilmCard = ({
   isSeen,
 }: Props) => {
   return (
-    <div className="bg-background-800 rounded-md p-3 flex flex-col gap-1 items-center text-primary  max-w-44 group ">
+    <div className="bg-background-800 rounded-md p-3 flex flex-col gap-1 items-center text-primary  min-w-44 max-w-44 group ">
       <div className=" w-full h-44 rounded-md overflow-hidden flex flex-col gap-4 relative">
         <img src={imageURL} alt={title} className="w-full" /> 
         <div className="invisible group-hover:visible bg-background/70 w-full h-full z-20 absolute top-0 left-0 cursor-default flex flex-col justify-center items-center gap-2">
