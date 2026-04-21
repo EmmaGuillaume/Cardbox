@@ -110,36 +110,20 @@ export default function NavBarDesktop() {
           {/* Profile */}
           <button
             onClick={() => setOpen(!open)}
-            aria-label="Ouvrir le menu du profil"
-            aria-expanded={open}
-            className={`flex items-center gap-2.5 bg-background-800 border rounded-full pl-3.5 pr-1.5 py-1.5 transition-colors cursor-pointer ${
-              open
-                ? "border-background-600"
-                : "border-transparent hover:border-background-600"
-            }`}
+            className={`flex items-center gap-2 rounded-full pl-3 pr-1 py-1 border outline-none cursor-pointer
+              transition-all duration-150 active:scale-[0.97]
+              ${open
+                ? "border-white/20 bg-white/6 ring-2 ring-white/7 hover:border-white/32 hover:bg-white/9"
+                : "border-transparent bg-white/4 hover:border-white/18 hover:bg-white/7 hover:ring-2 hover:ring-white/6"
+              }`}
           >
-            <div className="w-4.5 h-3 flex flex-col justify-between" aria-hidden="true">
-              <span
-                className={`block h-px rounded-full bg-primary/60 transition-all duration-200 origin-center ${
-                  open ? "translate-y-[5.5px] rotate-45" : ""
-                }`}
-              />
-              <span
-                className={`block h-px rounded-full bg-primary/60 transition-all duration-200 ${
-                  open ? "opacity-0 scale-x-0" : ""
-                }`}
-              />
-              <span
-                className={`block h-px rounded-full bg-primary/60 transition-all duration-200 origin-center ${
-                  open ? "-translate-y-[5.5px] -rotate-45" : ""
-                }`}
-              />
+            <div className="w-4 h-[11px] flex flex-col justify-between" aria-hidden="true">
+              <span className={`block h-px rounded-full transition-all duration-200 origin-center ${open ? "bg-white/75 translate-y-[4.75px] rotate-45" : "bg-white/55"}`} />
+              <span className={`block h-px rounded-full transition-all duration-200 ${open ? "bg-white/75 opacity-0 scale-x-0" : "bg-white/55"}`} />
+              <span className={`block h-px rounded-full transition-all duration-200 origin-center ${open ? "bg-white/75 -translate-y-[4.75px] -rotate-45" : "bg-white/55"}`} />
             </div>
-
-            <div className="w-7 h-7 rounded-full bg-[#F6FF72] flex items-center justify-center text-[11px] font-bold text-black">
-              <span className="sr-only">Profil utilisateur</span>
-              CT
-            </div>
+            <img src="https://i.pravatar.cc/80" alt="Avatar"
+              className="w-7 h-7 rounded-full object-cover transition-transform duration-150 hover:scale-105" />
           </button>
         </div>
       </nav>

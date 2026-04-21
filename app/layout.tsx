@@ -6,6 +6,7 @@ import NavBarDesktop from "@/components/features/NavBarDesktop";
 import UserDrawerDesktop from "@/components/features/UserDrawerDesktop";
 import { DrawerProvider } from "@/components/context/DrawerContext";
 import Footer from "@/components/ui/Footer";
+import UserDrawerMobile from "@/components/features/UserDrawerMobile";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,24 +15,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="fr">
       <body className="min-h-full flex flex-col bg-background text-primary font-krub">
         <DrawerProvider>
           <NavBarMobile />
           <NavBarDesktop />
+
           <div className="flex flex-1 overflow-hidden fixed top-16 left-0 right-0 bottom-0">
             <main className="flex-1 overflow-y-auto">
               {children}
-              <footer>
-                <Footer />
-              </footer>
+              <footer><Footer /></footer>
             </main>
             <UserDrawerDesktop />
           </div>
+
+          <UserDrawerMobile/>
+
           <TapBar />
         </DrawerProvider>
       </body>

@@ -6,8 +6,8 @@ import { useDrawer } from '../context/DrawerContext';
 export default function UserDrawerDesktop() {
     const { open } = useDrawer();
   return (
-<nav className={`h-full bg-background-900 flex flex-col pt-6 pb-3 gap-4 overflow-y-auto overflow-x-hidden
-  transition-all duration-300 ease-in-out
+<nav className={`hidden lg:flex bg-background-900 flex flex-col pt-6 pb-3 gap-4 overflow-y-auto overflow-x-hidden
+  transition-all duration-300 ease-in-out my-4 rounded-l-2xl
   ${open ? "w-80 opacity-100 px-5" : "w-0 opacity-0 px-0"}
 `}>
       {/* Profile */}
