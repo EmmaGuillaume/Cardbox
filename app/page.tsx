@@ -1,12 +1,23 @@
 "use client";
 import FilmCard from "@/components/features/FilmCard";
 import FilmReview from "@/components/features/FilmReview";
+import FriendCard from "@/components/features/FriendCard";
 import ItemSearch from "@/components/features/ItemSearch";
 
 export default function Home() {
   return (
     <>
       <div className="bg-background min-h-screen flex flex-col gap-8 items-center justify-center">
+        <FriendCard
+          name="John Doe"
+          follower={100}
+          following={50}
+          seen={20}
+          like={15}
+          list={5}
+          IsUserFollowed={true}
+          unfollowUser={() => console.log("Unfollowed John Doe")}
+        />z
         <div className="flex gap-8">
           <FilmReview
             persona="user"
