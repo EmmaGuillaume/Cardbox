@@ -2,10 +2,10 @@ import { Star } from "lucide-react";
 import { useState } from "react";
 
 type StarsNotationProps =
-  | { readonly?: false; rating: number }
-  | { readonly: true; rating: number };
+  | { readonly?: false; rating: number; big? : boolean }
+  | { readonly: true; rating: number; big?: boolean };
 
-const StarsNotation = ({ rating, readonly = false }: StarsNotationProps) => {
+const StarsNotation = ({ rating, readonly = false, big  }: StarsNotationProps) => {
   const [selected, setSelected] = useState<number | null>(null);
   const [hovered, setHovered] = useState<number | null>(null);
 
@@ -18,7 +18,7 @@ const StarsNotation = ({ rating, readonly = false }: StarsNotationProps) => {
       {Array.from({ length: 5 }, (_, i) => (
         <Star
           key={i}
-          className={`${selected ? "text-yellow" : "text-muted-foreground"} size-4 transition-colors ${!readonly ? "cursor-pointer" : "cursor-default text-yellow"}`}
+          className={`${selected ? "text-yellow" : "text-muted-foreground"} ${big ? "size-6" : "size-4"} transition-colors ${!readonly ? "cursor-pointer" : "cursor-default text-yellow"}`}
           fill={i < active ? "currentColor" : "none"}
           onMouseEnter={!readonly ? () => setHovered(i + 1) : undefined}
           onMouseLeave={!readonly ? () => setHovered(null) : undefined}
