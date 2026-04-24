@@ -14,6 +14,7 @@ const items = [
 export default function NavBarDesktop() {
   const { open, setOpen } = useDrawer();
   const [dropdownOpen, setDiscoverOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -35,7 +36,7 @@ export default function NavBarDesktop() {
   return (
     <>
       <nav
-        className="hidden lg:grid grid-cols-[1fr_2fr_1fr] items-center h-16 w-full fixed top-0 z-30 bg-background-900/80 backdrop-blur-lg text-primary font-krub px-6 border-b border-background-800"
+        className="hidden lg:grid grid-cols-[1fr_2fr_1fr] items-center h-16 w-full fixed top-0 z-30 bg-background-900/80 text-primary font-krub px-6 border-b border-background-800"
         aria-label="Navigation principale"
       >
         {/* LEFT */}
@@ -54,7 +55,7 @@ export default function NavBarDesktop() {
         {/* CENTER (Search) */}
      
 
-        <Searchbar input="" />
+        <Searchbar input={searchInput} setInput={setSearchInput} />
 
         {/* RIGHT */}
         <div className="flex items-center justify-end gap-3 text-md">
