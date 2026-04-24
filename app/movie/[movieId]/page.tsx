@@ -31,10 +31,17 @@ const MoviePage = () => {
     }
   };
   return (
-    <div className="flex flex-col gap-4 text-primary font-krub px-4 md:px-32 py-16">
+    <div className="mb-12 flex flex-col gap-4 text-primary font-krub px-4 md:px-32 py-16">
       <section className="flex flex-row flex-wrap gap-6 lg:flex-nowrap w-full">
+        <div className="w-full flex flex-col items-center justify-center md:hidden  h-24 overflow-hidden">
+          <img
+              className="w-full h-full object-cover"
+              src="https://imgs.search.brave.com/xxAthMZOQK2oBVrb0AeDn2gE7VsSpPUwevJJbHN6Sn0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5zZW5zY3JpdGlx/dWUuY29tL21lZGlh/LzAwMDAyMjgzOTgx/NC8zMDAvbGVfc2Vp/Z25ldXJfZGVzX2Fu/bmVhdXhfbGFfY29t/bXVuYXV0ZV9kZV9s/X2FubmVhdS5wbmc"
+              alt=""
+            />
+        </div>
         <section className="flex gap-4 w-full lg:w-2/3 ">
-          <div className="invisible w-0 md:visible md:h-full md:w-1/3 overflow-hidden">
+          <div className="hidden  md:flex md:h-full md:w-1/3 overflow-hidden">
             <img
               className="w-full h-full object-cover"
               src="https://imgs.search.brave.com/xxAthMZOQK2oBVrb0AeDn2gE7VsSpPUwevJJbHN6Sn0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5zZW5zY3JpdGlx/dWUuY29tL21lZGlh/LzAwMDAyMjgzOTgx/NC8zMDAvbGVfc2Vp/Z25ldXJfZGVzX2Fu/bmVhdXhfbGFfY29t/bXVuYXV0ZV9kZV9s/X2FubmVhdS5wbmc"
