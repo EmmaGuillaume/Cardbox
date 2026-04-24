@@ -146,6 +146,7 @@ export default function Home() {
       >
         {FakeDataBaseFilmList.map((film, index) => (
           <FilmReview
+            id={index}
             key={index}
             persona="friend"
             {...film}
