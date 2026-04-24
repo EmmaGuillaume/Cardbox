@@ -1,8 +1,18 @@
 "use client";
 import FilmCard from "@/components/features/FilmCard";
 import ItemSearch from "@/components/features/ItemSearch";
+import List from "@/components/ui/List";
+
 
 export default function Home() {
+
+    const listFilms = [
+        {title: "Titanic", src: "/titanic.png"},
+        {title: "Kill Bill", src: "/killbill.png"},
+        {title: "Dirty Dancing", src: "/dirtydancing.png"},
+        {title: "The Creator", src: "/thecreator.png"}
+    ];
+
   return (
     <>
       <div className="bg-background min-h-screen flex flex-col gap-8 items-center justify-center">
@@ -37,7 +47,12 @@ export default function Home() {
             filmDirector="Vince Gilligan"
             filmImageURL="https://m.media-amazon.com/images/M/MV5BMzU5ZGYzNmQtMTdhYy00OGRiLTg0NmQtYjVjNzliZTg1ZGE4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
           />
+
+
+
         </div>
+
+        <List onClick={() => console.log("Clicked")} title="Pour maman" author="Clémeninou" items={listFilms} avatar="https://i.pravatar.cc/80" />
       </div>
     </>
   );
