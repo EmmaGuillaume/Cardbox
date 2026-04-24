@@ -1,4 +1,5 @@
 "use client";
+import ReviewPageFilm from "@/components/features/ReviewPageFilm";
 import TabDetailsFilm from "@/components/features/TabDetailsFilm";
 import ButtonInterract from "@/components/ui/ButtonInterract";
 import StarsNotation from "@/components/ui/StarsNotation";
@@ -69,33 +70,35 @@ const MoviePage = () => {
             </div>
           </div>
         </section>
-        <section className=" pt-24 w-full lg:w-1/3 ">
-          <div className="flex flex-col gap-2">
-            <div className="flex justify-between mt-10">
-              <StarsNotation rating={0} readonly={false} big={true} />
-              <div className="flex gap-1">
-                <ButtonInterract
-                  type="like"
-                  onClick={() => {}}
-                  isAlreadyAdded={false}
-                />
-                <ButtonInterract
-                  type="watchlist"
-                  onClick={() => {}}
-                  isAlreadyAdded={false}
-                />
-                <ButtonInterract
-                  type="watchlater"
-                  onClick={() => {}}
-                  isAlreadyAdded={false}
-                />
+        <section className=" lg:pt-24 w-full lg:w-1/3 ">
+          <div className="flex flex-col justify-between h-full gap-2">
+            <div className="flex flex-col  gap-2">
+              <div className="flex justify-between mt-10">
+                <StarsNotation rating={0} readonly={false} big={true} />
+                <div className="flex gap-1">
+                  <ButtonInterract
+                    type="like"
+                    onClick={() => {}}
+                    isAlreadyAdded={false}
+                  />
+                  <ButtonInterract
+                    type="watchlist"
+                    onClick={() => {}}
+                    isAlreadyAdded={false}
+                  />
+                  <ButtonInterract
+                    type="watchlater"
+                    onClick={() => {}}
+                    isAlreadyAdded={false}
+                  />
+                </div>
               </div>
+              <textarea
+                placeholder="Ajouter un commentaire..."
+                className="bg-background-800 mb-6 lg:mb-0 px-4 py-0.5 rounded-lg focus:outline-background-400/50 focus:outline-1 "
+              />
             </div>
-            <textarea
-              placeholder="Ajouter un commentaire..."
-              className="bg-background-800 px-4 py-0.5 rounded-lg focus:outline-background-400/50 focus:outline-1 "
-            />
-            <div className="flex gap-2 items-center">
+            <div className="hidden lg:flex gap-2 items-center">
               <p>Trier par </p>
               <select
                 className="bg-background-800 px-3 py-2 rounded-sm"
@@ -109,11 +112,42 @@ const MoviePage = () => {
         </section>
       </section>
 
-      <section className="flex gap-6 flex-row flex-wrap lg:flex-nowrap">
-        <section className="h-4 bg-red w-full lg:w-2/3">
+      <section className="flex gap-6 flex-row flex-wrap lg:flex-nowrap ">
+        <section className="  w-full lg:w-2/3">
           <TabDetailsFilm />
         </section>
-        <div className="h-4 bg-red w-full lg:w-1/3"></div>
+        <div className="h-fit w-full lg:w-1/3 flex flex-col gap-4">
+          <ReviewPageFilm
+            isLiked={false}
+            likeReview={() => {}}
+            rating={5}
+            reviewContent="Bonjour"
+            date={new Date()}
+            title="Mid"
+            userAvatarUrl="https://i.pravatar.cc/80
+"
+          />
+          <ReviewPageFilm
+            isLiked={false}
+            likeReview={() => {}}
+            rating={5}
+            reviewContent="Review très intéressant, j'ai adoré les personnages et l'intrigue. Cependant, j'aurais aimé que le rythme soit un peu plus rapide par moments."
+            date={new Date()}
+            title="uper !!!"
+            userAvatarUrl="https://i.pravatar.cc/80
+"
+          />
+          <ReviewPageFilm
+            isLiked={false}
+            likeReview={() => {}}
+            rating={5}
+            reviewContent="Review très intéressant, j'ai adoré les personnages et l'intrigue. Cependant, j'aurais aimé que le rythme soit un peu plus rapide par moments."
+            date={new Date()}
+            title="Mid"
+            userAvatarUrl="https://i.pravatar.cc/80
+"
+          />
+        </div>
       </section>
     </div>
   );
