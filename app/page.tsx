@@ -1,4 +1,5 @@
 "use client";
+import { useDrawer } from "@/components/context/DrawerContext";
 import FilmCard from "@/components/features/FilmCard";
 import FilmReview from "@/components/features/FilmReview";
 import ScrollSection from "@/components/features/ScrollSection";
@@ -7,6 +8,7 @@ import { useRef, useState } from "react";
 
 export default function Home() {
   const [username] = useState("Clémeninou");
+  const { open } = useDrawer();
 
   const FakeDataBaseFilmList = [
     {
@@ -91,7 +93,9 @@ export default function Home() {
     },
   ];
   return (
-    <div className="bg-background min-h-screen flex gap-8 flex-col md:px-32 px-4 text-primary font-krub mb-24">
+    <div
+      className={`bg-background min-h-screen flex gap-8 flex-col transition duration-300 ${open ? "md:px-0 md:pl-12 md:pr-8" : "md:px-32"} px-4 text-primary font-krub mb-24 scrollbar-custom transition-[padding] duration-300 ease-in-out`}
+    >
       <div className="mt-8">
         <h1 className="text-primary font-merryweather flex gap-2 text-2xl">
           Bon retour, <p className="text-yellow">{username}</p> !

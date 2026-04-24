@@ -26,7 +26,7 @@ export default function RootLayout({
           <NavBarDesktop />
 
           <div className="flex flex-1 overflow-hidden fixed top-16 left-0 right-0 bottom-0">
-            <main className="flex-1 overflow-y-auto">
+            <main className="flex-1 overflow-y-auto scrollbar-custom">
               {children}
               <footer><Footer /></footer>
             </main>
