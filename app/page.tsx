@@ -4,6 +4,8 @@ import FilmReview from "@/components/features/FilmReview";
 import ScrollSection from "@/components/features/ScrollSection";
 
 import { useRef, useState } from "react";
+import List from "@/components/ui/List";
+
 
 export default function Home() {
   const [username] = useState("Clémeninou");
@@ -90,6 +92,14 @@ export default function Home() {
         "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
     },
   ];
+
+    const listFilms = [
+        {title: "Titanic", src: "/titanic.png"},
+        {title: "Kill Bill", src: "/killbill.png"},
+        {title: "Dirty Dancing", src: "/dirtydancing.png"},
+        {title: "The Creator", src: "/thecreator.png"}
+    ];
+
   return (
     <div className="bg-background min-h-screen flex gap-8 flex-col md:px-32 px-4 text-primary font-krub mb-24">
       <div className="mt-8">
