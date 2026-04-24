@@ -55,7 +55,7 @@ const ItemSearch = ({
     );
   } else if (type === "human") {
     return (
-      <div className="bg-background w-full rounded-md flex flex-wrap justify-center md:justify-between items-center p-2 text-primary">
+      <div className="bg-background w-full rounded-md flex flex-wrap justify-between items-center p-2 text-primary">
         <div className="flex items-center gap-2">
           <img src={humanImageURL} alt={humanName} className="w-10 h-10 object-cover rounded-full" />
           <div>
