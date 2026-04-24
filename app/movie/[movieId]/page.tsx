@@ -1,4 +1,5 @@
 "use client";
+import TabDetailsFilm from "@/components/features/TabDetailsFilm";
 import ButtonInterract from "@/components/ui/ButtonInterract";
 import StarsNotation from "@/components/ui/StarsNotation";
 import { EyeIcon, HeartIcon, ListIcon } from "lucide-react";
@@ -31,14 +32,13 @@ const MoviePage = () => {
   return (
     <div className="flex flex-col gap-4 text-primary font-krub px-4 md:px-32 py-16">
       <section className="flex flex-row flex-wrap gap-6 lg:flex-nowrap w-full">
-        <section className="flex gap-4 w-full md:w-2/3 ">
+        <section className="flex gap-4 w-full lg:w-2/3 ">
           <div className="invisible w-0 md:visible md:h-full md:w-1/3 overflow-hidden">
-              <img
-                className="w-full h-full object-cover"
-                src="https://imgs.search.brave.com/xxAthMZOQK2oBVrb0AeDn2gE7VsSpPUwevJJbHN6Sn0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5zZW5zY3JpdGlx/dWUuY29tL21lZGlh/LzAwMDAyMjgzOTgx/NC8zMDAvbGVfc2Vp/Z25ldXJfZGVzX2Fu/bmVhdXhfbGFfY29t/bXVuYXV0ZV9kZV9s/X2FubmVhdS5wbmc"
-                alt=""
-              />
-            
+            <img
+              className="w-full h-full object-cover"
+              src="https://imgs.search.brave.com/xxAthMZOQK2oBVrb0AeDn2gE7VsSpPUwevJJbHN6Sn0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5zZW5zY3JpdGlx/dWUuY29tL21lZGlh/LzAwMDAyMjgzOTgx/NC8zMDAvbGVfc2Vp/Z25ldXJfZGVzX2Fu/bmVhdXhfbGFfY29t/bXVuYXV0ZV9kZV9s/X2FubmVhdS5wbmc"
+              alt=""
+            />
           </div>
           <div className="flex flex-col gap-2 w-full">
             <h1 className="font-bold text-2xl">{film.title}</h1>
@@ -69,28 +69,51 @@ const MoviePage = () => {
             </div>
           </div>
         </section>
-        <section className=" pt-24 w-1/3 ">
-          <div className="flex justify-between mt-10">
-            <StarsNotation rating={0} readonly={false} big={true} />
-            <div className="flex gap-1">
-              <ButtonInterract
-                type="like"
-                onClick={() => {}}
-                isAlreadyAdded={false}
-              />
-              <ButtonInterract
-                type="watchlist"
-                onClick={() => {}}
-                isAlreadyAdded={false}
-              />
-              <ButtonInterract
-                type="watchlater"
-                onClick={() => {}}
-                isAlreadyAdded={false}
-              />
+        <section className=" pt-24 w-full lg:w-1/3 ">
+          <div className="flex flex-col gap-2">
+            <div className="flex justify-between mt-10">
+              <StarsNotation rating={0} readonly={false} big={true} />
+              <div className="flex gap-1">
+                <ButtonInterract
+                  type="like"
+                  onClick={() => {}}
+                  isAlreadyAdded={false}
+                />
+                <ButtonInterract
+                  type="watchlist"
+                  onClick={() => {}}
+                  isAlreadyAdded={false}
+                />
+                <ButtonInterract
+                  type="watchlater"
+                  onClick={() => {}}
+                  isAlreadyAdded={false}
+                />
+              </div>
+            </div>
+            <textarea
+              placeholder="Ajouter un commentaire..."
+              className="bg-background-800 px-4 py-0.5 rounded-lg focus:outline-background-400/50 focus:outline-1 "
+            />
+            <div className="flex gap-2 items-center">
+              <p>Trier par </p>
+              <select
+                className="bg-background-800 px-3 py-2 rounded-sm"
+                name=""
+                id=""
+              >
+                <option value="pertinence">Pertinence</option>
+              </select>
             </div>
           </div>
         </section>
+      </section>
+
+      <section className="flex gap-6 flex-row flex-wrap lg:flex-nowrap">
+        <section className="h-4 bg-red w-full lg:w-2/3">
+          <TabDetailsFilm />
+        </section>
+        <div className="h-4 bg-red w-full lg:w-1/3"></div>
       </section>
     </div>
   );
