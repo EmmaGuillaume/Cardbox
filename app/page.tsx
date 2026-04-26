@@ -6,104 +6,20 @@ import ScrollSection from "@/components/features/ScrollSection";
 
 import { useRef, useState } from "react";
 import List from "@/components/ui/List";
-
-
+import { usePopularMovies, useTrendingMovies } from "@/hooks/use-movies";
 
 export default function Home() {
-
-
   const [username] = useState("Clémeninou");
   const { open } = useDrawer();
 
-  const FakeDataBaseFilmList = [
-    {
-      title: "Le Seigneur des Anneaux",
-      realisateur: "Peter Jackson",
-      date: "2001",
-      imageURL:
-        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
-      rating: 5,
-      review:
-        "Un chef-d'œuvre épique qui transporte les spectateurs dans un monde fantastique rempli d'aventures, de courage et d'amitié. Les performances des acteurs, les effets visuels et la bande sonore sont tout simplement incroyables. Un incontournable pour les fans de fantasy !",
-    },
-    {
-      title: "The Dark Knight",
-      realisateur: "Christopher Nolan",
-      date: "2008",
-      imageURL:
-        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
-      rating: 3,
-      review:
-        "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
-    },
-    {
-      title: "Le Seigneur des Anneaux",
-      realisateur: "Peter Jackson",
-      date: "2001",
-      imageURL:
-        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
-      rating: 2,
-      review:
-        "Un chef-d'œuvre épique qui transporte les spectateurs dans un monde fantastique rempli d'aventures, de courage et d'amitié. Les performances des acteurs, les effets visuels et la bande sonore sont tout simplement incroyables. Un incontournable pour les fans de fantasy !",
-    },
-    {
-      title: "The Dark Knight",
-      realisateur: "Christopher Nolan",
-      date: "2008",
-      imageURL:
-        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
-      rating: 4.8,
-      review:
-        "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
-    },
-    {
-      title: "Le Seigneur des Anneaux",
-      realisateur: "Peter Jackson",
-      date: "2001",
-      imageURL:
-        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
-      rating: 1,
-      review:
-        "Un chef-d'œuvre épique qui transporte les spectateurs dans un monde fantastique rempli d'aventures, de courage et d'amitié. Les performances des acteurs, les effets visuels et la bande sonore sont tout simplement incroyables. Un incontournable pour les fans de fantasy !",
-    },
-    {
-      title: "The Dark Knight",
-      realisateur: "Christopher Nolan",
-      date: "2008",
-      imageURL:
-        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
-      rating: 5,
-      review:
-        "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
-    },
-    {
-      title: "The Dark Knight",
-      realisateur: "Christopher Nolan",
-      date: "2008",
-      imageURL:
-        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
-      rating: 2,
-      review:
-        "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
-    },
-    {
-      title: "The Dark Knight",
-      realisateur: "Christopher Nolan",
-      date: "2008",
-      imageURL:
-        "https://fastly.picsum.photos/id/894/200/300.jpg?hmac=yPKW_JRjZMfmYXpao6QL5LEt2cYJQdesD-zkL-U-UJs",
-      rating: 4,
-      review:
-        "Un film de super-héros sombre et intense qui redéfinit le genre. La performance de Heath Ledger en tant que Joker est tout simplement magistrale, apportant une profondeur et une complexité au personnage. L'intrigue captivante, les scènes d'action palpitantes et la réalisation impeccable font de ce film un classique moderne.",
-    },
-  ];
+  const { data, isLoading, isError } = usePopularMovies();
 
-    const listFilms = [
-        {title: "Titanic", src: "/titanic.png"},
-        {title: "Kill Bill", src: "/killbill.png"},
-        {title: "Dirty Dancing", src: "/dirtydancing.png"},
-        {title: "The Creator", src: "/thecreator.png"}
-    ];
+  const listFilms = [
+    { title: "Titanic", src: "/titanic.png" },
+    { title: "Kill Bill", src: "/killbill.png" },
+    { title: "Dirty Dancing", src: "/dirtydancing.png" },
+    { title: "The Creator", src: "/thecreator.png" },
+  ];
 
   return (
     <div
@@ -126,10 +42,10 @@ export default function Home() {
           </>
         }
       >
-        {FakeDataBaseFilmList.map((film, index) => (
+        {data?.results.map((film) => (
           <FilmCard
-            key={index}
-            {...film}
+            key={film.id}
+            movie={film}
             isLiked={false}
             isInWatchlist={false}
             isSeen={false}
@@ -144,10 +60,12 @@ export default function Home() {
           </>
         }
       >
-        {FakeDataBaseFilmList.map((film, index) => (
+        {data?.results.map((film) => (
           <FilmReview
-            id={index}
-            key={index}
+            realisateur={""}
+            date={""}
+            imageURL={""}
+            key={film.id}
             persona="friend"
             {...film}
             isLiked={false}
@@ -164,10 +82,10 @@ export default function Home() {
           </>
         }
       >
-        {FakeDataBaseFilmList.map((film, index) => (
+        {data?.results.map((film) => (
           <FilmCard
-            key={index}
-            {...film}
+            key={film.id}
+            movie={film}
             isLiked={false}
             isInWatchlist={false}
             isSeen={false}

@@ -1,6 +1,16 @@
 import { useState } from "react";
 import ItemSearch from "./ItemSearch";
 import Link from "next/link";
+import {
+  TMDBCastMember,
+  TMDBCountryProviders,
+  TMDBCreditsResponse,
+} from "@/types/tmdb.types";
+
+type Props = {
+  providers?: TMDBCountryProviders;
+  credit: TMDBCreditsResponse;
+};
 
 interface Provider {
   logo_path: string;
@@ -43,55 +53,11 @@ type CastMember = {
   order: number;
 };
 
-const TabDetailsFilm = () => {
+const TabDetailsFilm = (props: Props) => {
   const [selectedTab, setSelectedTab] = useState<"cast" | "watch" | "crew">(
     "cast",
   );
 
-  const cast: CastMember[] = [
-    {
-      adult: false,
-      gender: 2,
-      id: 1,
-      known_for_department: "Acting",
-      name: "John Doe",
-      original_name: "John Doe",
-      popularity: 10.0,
-      profile_path: "/path/to/profile.jpg",
-      cast_id: 1,
-      character: "Main Character",
-      credit_id: "abc123",
-      order: 0,
-    },
-    {
-      adult: false,
-      gender: 2,
-      id: 2,
-      known_for_department: "Acting",
-      name: "John Doe",
-      original_name: "John Doe",
-      popularity: 10.0,
-      profile_path: "/path/to/profile.jpg",
-      cast_id: 1,
-      character: "Main Character",
-      credit_id: "abc123",
-      order: 0,
-    },
-    {
-      adult: false,
-      gender: 2,
-      id: 3,
-      known_for_department: "Acting",
-      name: "John Doe",
-      original_name: "John Doe",
-      popularity: 10.0,
-      profile_path: "/path/to/profile.jpg",
-      cast_id: 1,
-      character: "Main Character",
-      credit_id: "abc123",
-      order: 0,
-    },
-  ];
   return (
     <section className="w-full flex flex-col">
       <section className="flex gap-2">
@@ -99,7 +65,7 @@ const TabDetailsFilm = () => {
           className={`${selectedTab == "cast" ? "bg-background-800" : "bg-background-900"} cursor-pointer px-4 py-1 rounded-t-sm`}
           onClick={() => setSelectedTab("cast")}
         >
-          Cast
+          Crédits
         </button>
         <button
           className={`${selectedTab == "watch" ? "bg-background-800" : "bg-background-900"} cursor-pointer px-4 py-1 rounded-t-sm`}
@@ -107,57 +73,61 @@ const TabDetailsFilm = () => {
         >
           Where to watch
         </button>
-        <button
-          className={`${selectedTab == "crew" ? "bg-background-800" : "bg-background-900"} cursor-pointer px-4 py-1 rounded-t-sm`}
-          onClick={() => setSelectedTab("crew")}
-        >
-          Crew
-        </button>
       </section>
-      <section className="bg-background-800 rounded-r-md rounded-b-md ">
-        {selectedTab === "cast" && (
-          <div className="p-4 flex gap-2 flex-col">
-            {cast.map((member) => (
-              <div key={member.id}>
-                <ItemSearch
-                  type="human"
-                  humanName={member.name}
-                  humanImageURL="https://i.pravatar.cc/800"
-                  humanRole={member.known_for_department}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-        {selectedTab === "watch" && (
-          <div className="flex lex-row flex-wrap gap-4 p-4">
-            {cast.map((member) => (
-              <div key={member.id}>
-                <ExternalLinkWatch
-                  logo_path="https://imgs.search.brave.com/u1Uqc8jkRSSmpNDivzHqVvO5f5q5XbyBCzw3_wOuW_I/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzQ1LzIvbmV0Zmxp/eC1sb2dvLXBuZ19z/ZWVrbG9nby00NTE5/ODEucG5n"
-                  provider_name="Netflix"
-                  provider_id={1}
-                  display_priority={1}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-
-        {selectedTab === "crew" && (
-          <div className="flex lex-row flex-wrap gap-4 p-4">
-            {cast.map((member) => (
-              <div key={member.id}>
-                <ExternalLinkWatch
-                  logo_path="https://imgs.search.brave.com/u1Uqc8jkRSSmpNDivzHqVvO5f5q5XbyBCzw3_wOuW_I/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzQ1LzIvbmV0Zmxp/eC1sb2dvLXBuZ19z/ZWVrbG9nby00NTE5/ODEucG5n"
-                  provider_name="Netflix"
-                  provider_id={1}
-                  display_priority={1}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+      <section className="bg-background-800 rounded-r-md rounded-b-md py-4">
+        <div className="max-h-96 overflow-y-scroll scrollbar-custom ">
+          {selectedTab === "cast" && (
+            <div className="p-4 flex gap-2 flex-col">
+              {props.credit &&
+                props.credit.cast.map((member) => (
+                  <div key={member.id}>
+                    <ItemSearch
+                      type="human"
+                      humanName={member.name}
+                      humanImageURL={
+                        member.profile_path
+                          ? `https://image.tmdb.org/t/p/w200${member.profile_path}`
+                          : "/placeholder.png"
+                      }
+                      humanRole={member.known_for_department}
+                    />
+                  </div>
+                ))}
+            </div>
+          )}
+          {selectedTab === "watch" && (
+            <div className="flex lex-row flex-wrap gap-4 p-4">
+              {(props.providers?.rent?.length ?? 0) +
+                (props.providers?.buy?.length ?? 0) ===
+              0 ? (
+                <p>Oops, nous ne savons pas où regarder ce film/série...</p>
+              ) : (
+                <>
+                  {props.providers?.rent?.map((provider) => (
+                    <div key={provider.provider_id}>
+                      <ExternalLinkWatch
+                        logo_path={provider.logo_path}
+                        provider_name={provider.provider_name}
+                        provider_id={provider.provider_id}
+                        display_priority={provider.display_priority}
+                      />
+                    </div>
+                  ))}
+                  {props.providers?.buy?.map((provider) => (
+                    <div key={provider.provider_id}>
+                      <ExternalLinkWatch
+                        logo_path={provider.logo_path}
+                        provider_name={provider.provider_name}
+                        provider_id={provider.provider_id}
+                        display_priority={provider.display_priority}
+                      />
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </section>
     </section>
   );
