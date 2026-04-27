@@ -102,7 +102,7 @@ const FilmReview = ({
       
           <div className="w-full h-28 rounded-t-md overflow-hidden">
             <img
-              src={imageURL}
+              src={imageURL ? imageURL : "/placeholder-poster.png"}
               alt={title}
               className="w-full h-full object-cover"
             />

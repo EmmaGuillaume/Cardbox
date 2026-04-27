@@ -3,57 +3,71 @@ import ReviewPageFilm from "@/components/features/ReviewPageFilm";
 import TabDetailsFilm from "@/components/features/TabDetailsFilm";
 import ButtonInterract from "@/components/ui/ButtonInterract";
 import StarsNotation from "@/components/ui/StarsNotation";
+import { useGetCredits, useGetProviders, useMovie } from "@/hooks/use-movies";
 import { EyeIcon, HeartIcon, ListIcon } from "lucide-react";
-import { resume } from "react-dom/server";
+import { useParams } from "next/navigation";
 
 const MoviePage = () => {
-  const film = {
-    title: "Le Seigneur des Anneaux : La Communauté de l'Anneau",
-    type: "Film",
-    date: "2001",
-    director: "Peter Jackson",
-    globalRating: 4.5,
-    duration: "2h58",
-    watchingNumber: 452789,
-    listNumber: 1200000,
-    likeNumber: 900000,
-    resume:
-      "Dans un monde fantastique, un jeune hobbit nommé Frodon Sacquet hérite d'un anneau maléfique qui doit être détruit pour sauver la Terre du Milieu. Accompagné d'une communauté de héros, il entreprend un périlleux voyage pour détruire l'anneau et vaincre les forces du mal.",
-  };
+  const { movieId } = useParams();
 
-  const numberToK = (num: number) => {
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1) + "M";
-    } else if (num >= 1000) {
-      return (num / 1000).toFixed(1) + "K";
-    } else {
-      return num.toString();
-    }
-  };
+  const id = movieId && typeof movieId === "string" ? parseInt(movieId) : 0;
+
+  const { data: film, isLoading, isError } = useMovie(id);
+  const { data: providers, isLoading: providersLoading } = useGetProviders(id);
+  const { data: credits, isLoading: creditsLoading } = useGetCredits(id);
+  console.log("credits", credits);
+
+  const ProviderFR = providers?.results.FR;
+
+  if (film === undefined || isLoading || isError) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="mb-12 flex flex-col gap-4 text-primary font-krub px-4 md:px-32 py-16">
       <section className="flex flex-row flex-wrap gap-6 lg:flex-nowrap w-full">
-        <div className="w-full flex flex-col items-center justify-center md:hidden  h-24 overflow-hidden">
+        <div className="w-full flex flex-col items-center justify-center md:hidden  h-24 overflow-hidden rounded-md">
           <img
-              className="w-full h-full object-cover"
-              src="https://imgs.search.brave.com/xxAthMZOQK2oBVrb0AeDn2gE7VsSpPUwevJJbHN6Sn0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5zZW5zY3JpdGlx/dWUuY29tL21lZGlh/LzAwMDAyMjgzOTgx/NC8zMDAvbGVfc2Vp/Z25ldXJfZGVzX2Fu/bmVhdXhfbGFfY29t/bXVuYXV0ZV9kZV9s/X2FubmVhdS5wbmc"
-              alt=""
-            />
+            className="w-full h-full object-cover"
+            src={
+              film.poster_path
+                ? `https://image.tmdb.org/t/p/w500${film.poster_path}`
+                : "/placeholder-poster.png"
+            }
+            alt=""
+          />
         </div>
         <section className="flex gap-4 w-full lg:w-2/3 ">
-          <div className="hidden  md:flex md:h-full md:w-1/3 overflow-hidden">
+          <div className="hidden  md:flex md:h-full md:w-1/3 overflow-hidden rounded-md">
             <img
               className="w-full h-full object-cover"
-              src="https://imgs.search.brave.com/xxAthMZOQK2oBVrb0AeDn2gE7VsSpPUwevJJbHN6Sn0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5zZW5zY3JpdGlx/dWUuY29tL21lZGlh/LzAwMDAyMjgzOTgx/NC8zMDAvbGVfc2Vp/Z25ldXJfZGVzX2Fu/bmVhdXhfbGFfY29t/bXVuYXV0ZV9kZV9s/X2FubmVhdS5wbmc"
+              src={
+                film.poster_path
+                  ? `https://image.tmdb.org/t/p/w500${film.poster_path}`
+                  : "/placeholder-poster.png"
+              }
               alt=""
             />
           </div>
           <div className="flex flex-col gap-2 w-full">
-            <h1 className="font-bold text-2xl">{film.title}</h1>
+            <div className="flex gap-4 flex-row flex-wrap items-center">
+              <h1 className="font-bold text-2xl">{film.title}</h1>
+              <StarsNotation rating={film.vote_average} readonly />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {film.genres.map((g) => (
+                <span
+                  key={g.id}
+                  className="bg-background-800 px-2 py-1 rounded-sm text-sm"
+                >
+                  {g.name}
+                </span>
+              ))}
+            </div>
             <p className="font-merryweather">
-              {film.type} • {film.date} • {film.duration}
+              {film.runtime} min • {film?.release_date.split("-")[0]}
             </p>
-            <StarsNotation rating={film.globalRating} readonly />
+
             <div className="relative w-full">
               <div className="w-full h-px bg-primary my-4 absolute top-0" />
             </div>
@@ -61,26 +75,32 @@ const MoviePage = () => {
             <div className="flex mt-8 gap-4 flex-wrap">
               <div className="flex gap-2 items-center">
                 <EyeIcon className="size-5" />
-                {numberToK(film.watchingNumber)}
+                {(
+                  Math.floor(Math.random() * (13784595 - 145203 + 1)) + 145203
+                ).toLocaleString()}
               </div>
               <div className="flex gap-2 items-center">
                 <ListIcon className="size-5" />
-                {numberToK(film.listNumber)}
+                {(
+                  Math.floor(Math.random() * (13784595 - 145203 + 1)) + 145203
+                ).toLocaleString()}
               </div>
               <div className="flex gap-2 items-center">
                 <HeartIcon className="size-5 fill-primary" />
-                {numberToK(film.likeNumber)}
+                {(
+                  Math.floor(Math.random() * (13784595 - 145203 + 1)) + 145203
+                ).toLocaleString()}
               </div>
             </div>
             <div className="w-2/3">
-              <p className="text-sm">{film.resume}</p>
+              <p className="text-sm">{film.overview}</p>
             </div>
           </div>
         </section>
         <section className=" lg:pt-24 w-full lg:w-1/3 ">
           <div className="flex flex-col justify-between h-full gap-2">
             <div className="flex flex-col  gap-2">
-              <div className="flex justify-between mt-10">
+              <div className="flex justify-between mt-12">
                 <StarsNotation rating={0} readonly={false} big={true} />
                 <div className="flex gap-1">
                   <ButtonInterract
@@ -121,7 +141,7 @@ const MoviePage = () => {
 
       <section className="flex gap-6 flex-row flex-wrap lg:flex-nowrap ">
         <section className="  w-full lg:w-2/3">
-          <TabDetailsFilm />
+          <TabDetailsFilm credit={credits!} providers={ProviderFR}/>
         </section>
         <div className="h-fit w-full lg:w-1/3 flex flex-col gap-4">
           <ReviewPageFilm
