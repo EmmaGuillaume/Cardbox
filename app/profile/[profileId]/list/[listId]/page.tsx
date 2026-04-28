@@ -25,12 +25,7 @@ function ListMovieItem({ movieApiId }: { movieApiId: string }) {
   // FilmCard attend un TMDBMovie ; useMovie renvoie un TMDBMovieDetail —
   // on cast en passant les champs communs nécessaires à la card.
   return (
-    <FilmCard
-      movie={movie as unknown as Parameters<typeof FilmCard>[0]["movie"]}
-      isLiked={false}
-      isInWatchlist={false}
-      isSeen={false}
-    />
+    <FilmCard movie={movie} />
   );
 }
 
