@@ -23,9 +23,15 @@ const ItemSearch = ({
     return (
       <div className="bg-background w-full rounded-md flex flex-wrap justify-center md:justify-between items-center p-2 text-primary cursor-pointer hover:bg-background-800 transition-colors duration-150 group">
         <div className="flex items-center gap-2">
-          <img src={filmImageURL} alt={title} className="w-10 rounded-sm group-hover:brightness-110 group-hover:font-bold transition-all duration-150" />
+          <img
+            src={filmImageURL || undefined}
+            alt={title}
+            className="w-10 rounded-sm group-hover:brightness-110 group-hover:font-bold transition-all duration-150"
+          />
           <div>
-            <h2 className="md:text-lg font-krub font-light group-hover:text-white transition-colors duration-150">{title}</h2>
+            <h2 className="md:text-lg font-krub font-light group-hover:text-white transition-colors duration-150">
+              {title}
+            </h2>
             <div className="flex flex-nowrap gap-2 opacity-80">
               <p>{type === "film" ? "Film" : "Série"}</p>
               <p>•</p>
@@ -57,12 +63,14 @@ const ItemSearch = ({
       <div className="bg-background w-full rounded-md flex flex-wrap justify-between items-center p-2 text-primary cursor-pointer hover:bg-background-800 transition-colors duration-150 group">
         <div className="flex items-center gap-2">
           <img
-            src={humanImageURL}
+            src={humanImageURL || undefined}
             alt={humanName}
             className="w-10 h-10 object-cover rounded-full group-hover:brightness-110 group-hover:font-bold transition-all duration-150"
           />
           <div>
-            <h2 className="md:text-lg font-krub font-light group-hover:text-white transition-colors duration-150">{humanName}</h2>
+            <h2 className="md:text-lg font-krub font-light group-hover:text-white transition-colors duration-150">
+              {humanName}
+            </h2>
             <div className="flex flex-nowrap gap-2 opacity-80">
               <p>{humanRole}</p>
             </div>

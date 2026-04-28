@@ -46,9 +46,9 @@ export default function Home() {
           <FilmCard
             key={film.id}
             movie={film}
-            isLiked={false}
-            isInWatchlist={false}
-            isSeen={false}
+            
+            
+            
           />
         ))}
       </ScrollSection>
@@ -62,15 +62,12 @@ export default function Home() {
       >
         {data?.results.map((film) => (
           <FilmReview
-            realisateur={""}
             date={""}
-            imageURL={""}
+            imageURL={film.poster_path || ""}
             key={film.id}
             persona="friend"
             {...film}
-            isLiked={false}
-            isInWatchlist={false}
-            isSeen={false}
+          
           />
         ))}
       </ScrollSection>
@@ -86,9 +83,7 @@ export default function Home() {
           <FilmCard
             key={film.id}
             movie={film}
-            isLiked={false}
-            isInWatchlist={false}
-            isSeen={false}
+            
           />
         ))}
       </ScrollSection>
