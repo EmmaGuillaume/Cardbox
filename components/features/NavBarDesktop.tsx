@@ -1,9 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, Search, Trophy, List, Telescope } from "lucide-react";
+import { ChevronDown, Trophy, List, Telescope, LogIn } from "lucide-react";
 import Link from "next/link";
 import Searchbar from "../ui/Searchbar";
 import { useDrawer } from "../context/DrawerContext";
+import { useAuthModal } from "../context/AuthModalContext";
+import { useAuth } from "@/hooks/use-auth";
 
 const items = [
   { label: "Top films", icon: Trophy, link: "/top-films" },
@@ -13,6 +15,8 @@ const items = [
 
 export default function NavBarDesktop() {
   const { open, setOpen } = useDrawer();
+  const { openModal } = useAuthModal();
+  const { isAuthenticated, profile } = useAuth();
   const [dropdownOpen, setDiscoverOpen] = useState(false);
   const [searchInput, setSearchInput] = useState("");
 
@@ -33,6 +37,8 @@ export default function NavBarDesktop() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const avatarUrl = profile?.avatar_url || "https://i.pravatar.cc/80";
+
   return (
     <>
       <nav
@@ -51,10 +57,7 @@ export default function NavBarDesktop() {
           </Link>
         </div>
 
-
         {/* CENTER (Search) */}
-     
-
         <Searchbar input={searchInput} setInput={setSearchInput} />
 
         {/* RIGHT */}
@@ -67,65 +70,78 @@ export default function NavBarDesktop() {
               aria-haspopup="menu"
               aria-expanded={dropdownOpen}
               aria-controls="discover-menu"
-              className={`flex items-center gap-2.5 bg-background-800 border rounded-md py-1.5 px-3 ${
+              className={`flex items-center gap-2.5 bg-background-800 border rounded-md py-1.5 px-3 cursor-pointer ${
                 dropdownOpen
                   ? "border-background-600"
                   : "border-transparent hover:border-background-600"
               }`}
             >
               Découvrir
-                <ChevronDown
-                  className={`w-3 h-3 transition-transform duration-200 ${
-                    dropdownOpen ? "rotate-180" : ""
-                  }`}
-                  aria-hidden="true"
-                />
-              </button>
-
-              <div
-                id="discover-menu"
-                role="menu"
-                className={`absolute right-0 top-[calc(100%+5px)] w-48 bg-background-900 border border-background-600 rounded-md overflow-hidden z-50 transition-all duration-200 origin-top-right ${
-                  dropdownOpen
-                    ? "opacity-100 scale-100 translate-y-0"
-                    : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+              <ChevronDown
+                className={`w-3 h-3 transition-transform duration-200 ${
+                  dropdownOpen ? "rotate-180" : ""
                 }`}
+                aria-hidden="true"
+              />
+            </button>
+
+            <div
+              id="discover-menu"
+              role="menu"
+              className={`absolute right-0 top-[calc(100%+5px)] w-48 bg-background-900 border border-background-600 rounded-md overflow-hidden z-50 transition-all duration-200 origin-top-right ${
+                dropdownOpen
+                  ? "opacity-100 scale-100 translate-y-0"
+                  : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+              }`}
             >
               <div className="p-1.5">
                 {items.map(({ label, icon: Icon, link }) => (
-                <Link
-                  key={label}
-                  href={link}
-                  role="menuitem"
-                  tabIndex={dropdownOpen ? 0 : -1}
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-primary/70 hover:bg-background-800 hover:text-primary transition-colors"
-                >
-                  <Icon className="w-4 h-4" aria-hidden="true" />
-                  {label}
-                </Link>
+                  <Link
+                    key={label}
+                    href={link}
+                    role="menuitem"
+                    tabIndex={dropdownOpen ? 0 : -1}
+                    className="flex items-center gap-2 px-3 py-2 text-sm text-primary/70 hover:bg-background-800 hover:text-primary transition-colors"
+                  >
+                    <Icon className="w-4 h-4" aria-hidden="true" />
+                    {label}
+                  </Link>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Profile */}
-          <button
-            onClick={() => setOpen(!open)}
-            className={`flex items-center gap-2 rounded-full pl-3 pr-1 py-1 border outline-none cursor-pointer
-              transition-all duration-150 active:scale-[0.97]
-              ${open
-                ? "border-white/20 bg-white/6 ring-2 ring-white/7 hover:border-white/32 hover:bg-white/9"
-                : "border-transparent bg-white/4 hover:border-white/18 hover:bg-white/7 hover:ring-2 hover:ring-white/6"
-              }`}
-          >
-            <div className="w-4 h-[11px] flex flex-col justify-between" aria-hidden="true">
-              <span className={`block h-px rounded-full transition-all duration-200 origin-center ${open ? "bg-white/75 translate-y-[4.75px] rotate-45" : "bg-white/55"}`} />
-              <span className={`block h-px rounded-full transition-all duration-200 ${open ? "bg-white/75 opacity-0 scale-x-0" : "bg-white/55"}`} />
-              <span className={`block h-px rounded-full transition-all duration-200 origin-center ${open ? "bg-white/75 -translate-y-[4.75px] -rotate-45" : "bg-white/55"}`} />
-            </div>
-            <img src="https://i.pravatar.cc/80" alt="Avatar"
-              className="w-7 h-7 rounded-full object-cover transition-transform duration-150 hover:scale-105" />
-          </button>
+          {/* Profile / Connect */}
+          {isAuthenticated ? (
+            <button
+              onClick={() => setOpen(!open)}
+              className={`flex items-center gap-2 rounded-full pl-3 pr-1 py-1 border outline-none cursor-pointer
+                transition-all duration-150 active:scale-[0.97]
+                ${open
+                  ? "border-white/20 bg-white/6 ring-2 ring-white/7 hover:border-white/32 hover:bg-white/9"
+                  : "border-transparent bg-white/4 hover:border-white/18 hover:bg-white/7 hover:ring-2 hover:ring-white/6"
+                }`}
+            >
+              <div className="w-4 h-[11px] flex flex-col justify-between" aria-hidden="true">
+                <span className={`block h-px rounded-full transition-all duration-200 origin-center ${open ? "bg-white/75 translate-y-[4.75px] rotate-45" : "bg-white/55"}`} />
+                <span className={`block h-px rounded-full transition-all duration-200 ${open ? "bg-white/75 opacity-0 scale-x-0" : "bg-white/55"}`} />
+                <span className={`block h-px rounded-full transition-all duration-200 origin-center ${open ? "bg-white/75 -translate-y-[4.75px] -rotate-45" : "bg-white/55"}`} />
+              </div>
+              <img
+                src={avatarUrl}
+                alt="Avatar"
+                className="w-7 h-7 rounded-full object-cover transition-transform duration-150 hover:scale-105"
+              />
+            </button>
+          ) : (
+            <button
+              onClick={() => openModal("signin")}
+              className="flex items-center gap-2 bg-primary text-background font-bold rounded-full px-4 py-1.5 hover:bg-primary/90 transition-colors cursor-pointer"
+            >
+              <LogIn className="w-4 h-4" />
+              Connexion
+            </button>
+          )}
         </div>
       </nav>
 
