@@ -2,41 +2,37 @@ import ButtonInterract from "@/components/ui/ButtonInterract";
 import Image from "next/image";
 import Link from "next/link";
 import StarsNotation from "../ui/StarsNotation";
+import {
+  useLikeMovie,
+  useMovieStatus,
+  useWatchlistMovie,
+  useWatchMovie,
+} from "@/hooks/use-movie-status";
 const REVIEW_MAX_LENGTH = 60;
+
 type Props = {
   id: number | string;
   title: string;
-  realisateur: string;
   date: string;
   imageURL: string;
-  isLiked: boolean;
-  isInWatchlist: boolean;
-  isSeen: boolean;
   persona: "user" | "friend";
   review?: string;
   rating?: number;
-  onLike?: () => void;
-  onWatchlist?: () => void;
-  onList?: () => void;
 };
-
 const FilmReview = ({
   id,
   title,
-  realisateur,
   date,
   imageURL,
-  isLiked,
-  isInWatchlist,
-  isSeen,
   persona,
   review,
   rating,
-  onLike,
-  onWatchlist,
-  onList,
 }: Props) => {
-  console.log("is in Watchlist", isInWatchlist);
+  const movieApiId = String(id);
+  const { data: status } = useMovieStatus(movieApiId);
+  const { mutate: like } = useLikeMovie(movieApiId);
+  const { mutate: watch } = useWatchMovie(movieApiId);
+  const { mutate: watchlist } = useWatchlistMovie(movieApiId);
   if (persona === "user") {
     return (
       <div className="bg-background-800 rounded-md p-3 flex flex-col gap-1 justify-between text-primary w-44 min-w-44 max-w-44 h-56">
@@ -83,12 +79,9 @@ const FilmReview = ({
         <div className="flex justify-between w-full">
           <StarsNotation rating={rating ? rating : 0} />
           <ButtonInterract
+            isAlreadyAdded={status?.liked ?? false}
             type="like"
-            small
-            isAlreadyAdded={isLiked}
-            onClick={() => {
-              onLike?.();
-            }}
+            onClick={() => like(!status?.liked)}
           />
         </div>
       </div>
@@ -99,7 +92,6 @@ const FilmReview = ({
     return (
       <div className="bg-background-800 rounded-md p-3 flex flex-col gap-1 justify-between text-primary w-44 min-w-44 max-w-44 h-56">
         <article className="flex flex-col justify-between  w-full min-w-0 items-start overflow-hidden cursor-default">
-      
           <div className="w-full h-28 rounded-t-md overflow-hidden">
             <img
               src={imageURL ? imageURL : "/placeholder-poster.png"}
@@ -142,20 +134,16 @@ const FilmReview = ({
           <StarsNotation rating={rating ? rating : 0} readonly />
           <div className="flex gap-1 items-center">
             <ButtonInterract
-              small
               type="watchlist"
-              isAlreadyAdded={isSeen}
               onClick={() => {
-                console.log("Liked");
+                watch(!(status?.watched ?? false));
               }}
+              isAlreadyAdded={status?.watched ?? false}
             />
             <ButtonInterract
-              small
               type="watchlater"
-              isAlreadyAdded={isInWatchlist}
-              onClick={() => {
-                console.log("add to watchlater");
-              }}
+              isAlreadyAdded={status?.in_watchlist ?? false}
+              onClick={() => watchlist(!status?.in_watchlist)}
             />
           </div>
         </div>

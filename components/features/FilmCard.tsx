@@ -1,5 +1,6 @@
 import ButtonInterract from "@/components/ui/ButtonInterract";
-import { useGetCredits, usePopularMovies } from "@/hooks/use-movies";
+import { useGetCredits } from "@/hooks/use-movies";
+import { useLikeMovie, useMovieStatus, useWatchlistMovie, useWatchMovie } from "@/hooks/use-movie-status";
 import type { TMDBMovie } from "@/types/tmdb.types";
 import Link from "next/link";
 
@@ -7,19 +8,18 @@ const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
 
 type Props = {
   movie: TMDBMovie;
-  isLiked: boolean;
-  isInWatchlist: boolean;
-  isSeen: boolean;
 };
 
-const FilmCard = ({ movie, isLiked, isInWatchlist, isSeen }: Props) => {
-  const imageURL = movie.poster_path
-    ? `${TMDB_IMAGE_BASE}${movie.poster_path}`
-    : "/placeholder-poster.png";
-
-  const { data : credits, isLoading, isError } = useGetCredits(movie.id);
-
+const FilmCard = ({ movie }: Props) => {
+  const movieApiId = String(movie.id)
+  const imageURL = movie.poster_path ? `${TMDB_IMAGE_BASE}${movie.poster_path}` : "/placeholder-poster.png";
   const year = movie.release_date?.split("-")[0] ?? "";
+
+  const { data: credits } = useGetCredits(movie.id);
+  const { data: status } = useMovieStatus(movieApiId);
+  const { mutate: like } = useLikeMovie(movieApiId);
+  const { mutate: watch } = useWatchMovie(movieApiId);
+  const { mutate: watchlist } = useWatchlistMovie(movieApiId);
 
   return (
     <div className="bg-background-800 rounded-md p-3 flex flex-col gap-1 items-center text-primary min-w-44 max-w-44 group">
@@ -27,19 +27,19 @@ const FilmCard = ({ movie, isLiked, isInWatchlist, isSeen }: Props) => {
         <img src={imageURL} alt={movie.title} className="w-full" />
         <div className="invisible group-hover:visible bg-background/70 w-full h-full z-20 absolute top-0 left-0 cursor-default flex flex-col justify-center items-center gap-2">
           <ButtonInterract
-            isAlreadyAdded={isSeen}
+            isAlreadyAdded={status?.watched ?? false}
             type="list"
-            onClick={() => console.log("Marked as seen")}
+            onClick={() => watch(!status?.watched)}
           />
           <ButtonInterract
-            isAlreadyAdded={isLiked}
+            isAlreadyAdded={status?.liked ?? false}
             type="like"
-            onClick={() => console.log("Liked")}
+            onClick={() => like(!status?.liked)}
           />
           <ButtonInterract
-            isAlreadyAdded={isInWatchlist}
+            isAlreadyAdded={status?.in_watchlist ?? false}
             type="watchlist"
-            onClick={() => console.log("Added to watchlist")}
+            onClick={() => watchlist(!status?.in_watchlist)}
           />
         </div>
       </div>

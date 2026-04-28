@@ -3,12 +3,27 @@ import ReviewPageFilm from "@/components/features/ReviewPageFilm";
 import TabDetailsFilm from "@/components/features/TabDetailsFilm";
 import ButtonInterract from "@/components/ui/ButtonInterract";
 import StarsNotation from "@/components/ui/StarsNotation";
+import {
+  useLikeMovie,
+  useMovieStatus,
+  useWatchlistMovie,
+  useWatchMovie,
+} from "@/hooks/use-movie-status";
 import { useGetCredits, useGetProviders, useMovie } from "@/hooks/use-movies";
+import { useUpsertReview } from "@/hooks/use-review";
 import { EyeIcon, HeartIcon, ListIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 
 const MoviePage = () => {
   const { movieId } = useParams();
+
+  const movieApiId = String(movieId);
+
+  const { data: status } = useMovieStatus(movieApiId);
+  const { mutate: like } = useLikeMovie(movieApiId);
+  const { mutate: watch } = useWatchMovie(movieApiId);
+  const { mutate: watchlist } = useWatchlistMovie(movieApiId);
+  const { mutate: upsertReview } = useUpsertReview(movieApiId);
 
   const id = movieId && typeof movieId === "string" ? parseInt(movieId) : 0;
 
@@ -105,18 +120,18 @@ const MoviePage = () => {
                 <div className="flex gap-1">
                   <ButtonInterract
                     type="like"
-                    onClick={() => {}}
-                    isAlreadyAdded={false}
+                    isAlreadyAdded={status?.liked ?? false}
+                    onClick={() => like(!status?.liked)}
                   />
                   <ButtonInterract
                     type="watchlist"
-                    onClick={() => {}}
-                    isAlreadyAdded={false}
+                    onClick={() => {watch(!(status?.watched ?? false))}}
+                    isAlreadyAdded={status?.watched ?? false}
                   />
                   <ButtonInterract
                     type="watchlater"
-                    onClick={() => {}}
-                    isAlreadyAdded={false}
+                    isAlreadyAdded={status?.in_watchlist ?? false}
+                    onClick={() => watchlist(!status?.in_watchlist)}
                   />
                 </div>
               </div>
@@ -141,7 +156,7 @@ const MoviePage = () => {
 
       <section className="flex gap-6 flex-row flex-wrap lg:flex-nowrap ">
         <section className="  w-full lg:w-2/3">
-          <TabDetailsFilm credit={credits!} providers={ProviderFR}/>
+          <TabDetailsFilm credit={credits!} providers={ProviderFR} />
         </section>
         <div className="h-fit w-full lg:w-1/3 flex flex-col gap-4">
           <ReviewPageFilm
