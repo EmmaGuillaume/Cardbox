@@ -14,7 +14,7 @@ type Props = {
   id: number | string;
   title: string;
   date: string;
-  imageURL: string;
+  imageURL: string | null;
   persona: "user" | "friend";
   review?: string;
   rating?: number;
@@ -41,7 +41,7 @@ const FilmReview = ({
           {/* Image - hauteur fixe */}
           <div className="w-full h-28 rounded-t-md overflow-hidden">
             <img
-              src={imageURL}
+              src={imageURL ? imageURL : ""}
               alt={title}
               className="w-full h-full object-cover"
             />
