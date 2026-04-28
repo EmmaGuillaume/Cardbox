@@ -58,7 +58,7 @@ function ListDetailContent() {
   }
 
   return (
-    <div className="px-4 md:px-32 py-8 text-primary font-krub flex flex-col gap-6">
+    <div className="h-full px-4 md:px-32 py-8 text-primary font-krub flex flex-col gap-6">
       <div>
         <h1 className="font-merryweather text-2xl">{list.name}</h1>
         <p className="text-primary/50 text-sm">

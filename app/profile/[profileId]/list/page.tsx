@@ -104,7 +104,7 @@ function ListsContent() {
   const avatar = profile?.avatar_url || "https://i.pravatar.cc/80";
 
   return (
-    <div className="px-4 md:px-32 py-8 text-primary font-krub flex flex-col gap-6">
+    <div className="h-full px-4 md:px-32 py-8 text-primary font-krub flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="font-merryweather text-2xl">
           Mes <span className="text-yellow">listes</span>
