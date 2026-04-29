@@ -119,7 +119,7 @@ function ActivityContent() {
         </div>
       )}
 
-      {!isLoading && reviews?.length === 0 && (
+      {!isLoading && reviews && reviews?.length === 0 && (
         <div className="text-primary/50 text-sm bg-background-800 rounded-md p-8 text-center">
           Aucune activité pour l'instant. Notez un film pour commencer !
         </div>
