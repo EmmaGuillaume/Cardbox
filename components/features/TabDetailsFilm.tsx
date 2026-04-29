@@ -82,6 +82,7 @@ const TabDetailsFilm = (props: Props) => {
                 props.credit.cast.map((member) => (
                   <div key={member.id}>
                     <ItemSearch
+                      id={member.id}
                       type="human"
                       humanName={member.name}
                       humanImageURL={
