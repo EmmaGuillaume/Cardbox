@@ -4,6 +4,7 @@ import ItemSearch from "../features/ItemSearch";
 import { Search, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSearchMovies } from "@/hooks/use-movies";
+import { getRecentlyViewed, type RecentFilm } from "@/hooks/use-recently-viewed";
 
 type SearchbarProps = {
   input: string;
@@ -14,9 +15,9 @@ const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w92";
 
 const Searchbar = ({ input, setInput }: SearchbarProps) => {
   const [isSelected, setIsSelected] = useState(false);
+  const [recentFilms, setRecentFilms] = useState<RecentFilm[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
   const [debouncedInput, setDebouncedInput] = useState(input);
 
   useEffect(() => {
@@ -39,6 +40,11 @@ const Searchbar = ({ input, setInput }: SearchbarProps) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleFocus = () => {
+    setIsSelected(true);
+    setRecentFilms(getRecentlyViewed());
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && input.trim()) {
       setIsSelected(false);
@@ -46,7 +52,8 @@ const Searchbar = ({ input, setInput }: SearchbarProps) => {
     }
   };
 
-  const showDropdown = isSelected && input.trim().length > 2;
+  const isSearching = input.trim().length > 2;
+  const showDropdown = isSelected && (isSearching || recentFilms.length > 0);
   const results = data?.results.slice(0, 5) ?? [];
 
   return (
@@ -62,7 +69,7 @@ const Searchbar = ({ input, setInput }: SearchbarProps) => {
       <input
         onChange={(e) => setInput?.(e.target.value)}
         onKeyDown={handleKeyDown}
-        onClick={() => setIsSelected(true)}
+        onFocus={handleFocus}
         type="text"
         placeholder="Rechercher un film, un genre, un·e artiste…"
         className="px-4 py-1 bg-transparent w-full focus:outline-none text-primary"
@@ -73,23 +80,42 @@ const Searchbar = ({ input, setInput }: SearchbarProps) => {
           showDropdown ? "visible opacity-100" : "opacity-0 pointer-events-none"
         } top-12 rounded-b-xl px-4 py-6 text-primary transition-opacity duration-300`}
       >
-        {results.length > 0
-          ? results.map((film) => (
+        {!isSearching && recentFilms.length > 0 ? (
+          <>
+            {recentFilms.map((film) => (
               <ItemSearch
                 key={film.id}
+                id={film.id}
                 type="film"
                 title={film.title}
                 filmDirector={film.release_date?.slice(0, 4)}
-                filmImageURL={
-                  film.poster_path
-                    ? `${TMDB_IMAGE_BASE}${film.poster_path}`
-                    : ""
-                }
+                filmImageURL={film.poster_path ? `${TMDB_IMAGE_BASE}${film.poster_path}` : ""}
+                isRecent={true}
+                onClick={() => setIsSelected(false)}
               />
-            ))
-          : !isLoading && (
-              <p className="text-sm opacity-50 text-center">Aucun résultat</p>
-            )}
+            ))}
+          </>
+        ) : results.length > 0 ? (
+          results.map((film) => (
+            <ItemSearch
+              key={film.id}
+              id={film.id}
+              type="film"
+              title={film.title}
+              filmDirector={film.release_date?.slice(0, 4)}
+              filmImageURL={
+                film.poster_path
+                  ? `${TMDB_IMAGE_BASE}${film.poster_path}`
+                  : ""
+              }
+              onClick={() => setIsSelected(false)}
+            />
+          ))
+        ) : (
+          !isLoading && isSearching && (
+            <p className="text-sm opacity-50 text-center">Aucun résultat</p>
+          )
+        )}
       </div>
     </div>
   );

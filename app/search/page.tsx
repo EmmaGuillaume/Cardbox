@@ -38,7 +38,7 @@ function SearchContent() {
     >
       <div className="mt-8">
         <h1 className="text-primary font-merryweather flex gap-2 text-2xl flex-wrap">
-          Résultats pour <span className="text-yellow">« {query || "…"} »</span>
+          Résultats pour « <span className="text-yellow">{query || "…"}</span> »
         </h1>
         <p className="font-extralight text-sm mt-1">
           {isLoading

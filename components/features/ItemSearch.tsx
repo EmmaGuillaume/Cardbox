@@ -1,28 +1,41 @@
+import Link from "next/link";
 import ButtonInterract from "../ui/ButtonInterract";
+import { ClockFading } from "lucide-react";
 
 type Props = {
   type: "film" | "human" | "serie";
+  id: number;
   title?: string;
   filmDirector?: string;
   filmImageURL?: string;
   humanRole?: string;
   humanName?: string;
   humanImageURL?: string;
+  isRecent?: boolean;
+  onClick?: () => void;
 };
 
 const ItemSearch = ({
   type,
+  id,
   title,
   filmDirector,
   humanName,
   filmImageURL,
   humanRole,
   humanImageURL,
+  isRecent,
+  onClick
 }: Props) => {
   if (type === "film" || type === "serie") {
     return (
-      <div className="bg-background w-full rounded-md flex flex-wrap justify-center md:justify-between items-center p-2 text-primary cursor-pointer hover:bg-background-800 transition-colors duration-150 group">
+      <Link href={`/movie/${id}`} onClick={onClick} className="bg-background w-full rounded-md flex flex-wrap justify-center md:justify-between items-center p-2 text-primary cursor-pointer hover:bg-background-800 transition-colors duration-150 group">
         <div className="flex items-center gap-2">
+          {isRecent ? (
+  <div className="w-10 h-14 flex items-center justify-center">
+    <ClockFading className="w-6 h-6 opacity-80" />
+  </div>
+):""}
           <img
             src={filmImageURL || undefined}
             alt={title}
@@ -56,7 +69,7 @@ const ItemSearch = ({
             onClick={() => console.log("Added to watchlist")}
           />
         </div>
-      </div>
+      </Link>
     );
   } else if (type === "human") {
     return (

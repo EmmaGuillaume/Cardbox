@@ -14,6 +14,8 @@ import { useMovieReviews, useUpsertReview } from "@/hooks/use-review";
 import { EyeIcon, HeartIcon, ListIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useEffect } from "react";
+import { addToRecentlyViewed } from "@/hooks/use-recently-viewed"
 
 const MoviePage = () => {
   const { movieId } = useParams();
@@ -48,7 +50,15 @@ const MoviePage = () => {
     return <div>Loading...</div>;
   }
 
+  addToRecentlyViewed({
+    id: film.id,
+    title: film.title,
+    poster_path: film.poster_path ?? undefined,
+    release_date: film.release_date
+  });
+
   return (
+    
     <div className="mb-12 flex flex-col gap-4 text-primary font-krub px-4 md:px-32 py-16">
       <section className="flex flex-row flex-wrap gap-6 lg:flex-nowrap w-full">
         <div className="w-full flex flex-col items-center justify-center md:hidden h-24 overflow-hidden rounded-md">
