@@ -3,12 +3,12 @@ import { activityService } from '@/services/activity.service'
 
 export const activityKeys = {
   all: ['activity'] as const,
-  reviews: () => [...activityKeys.all, 'reviews'] as const,
+  full: () => [...activityKeys.all, 'full'] as const,
 }
 
 export function useUserActivity() {
   return useQuery({
-    queryKey: activityKeys.reviews(),
-    queryFn: activityService.getUserReviews,
+    queryKey: activityKeys.full(),
+    queryFn: activityService.getUserActivity,
   })
 }
