@@ -3,23 +3,13 @@ import { useDrawer } from "@/components/context/DrawerContext";
 import FilmCard from "@/components/features/FilmCard";
 import FilmReview from "@/components/features/FilmReview";
 import ScrollSection from "@/components/features/ScrollSection";
-
-import { useRef, useState } from "react";
-import List from "@/components/ui/List";
-import { usePopularMovies, useTrendingMovies } from "@/hooks/use-movies";
+import { usePopularMovies } from "@/hooks/use-movies";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Home() {
-  const [username] = useState("Clémeninou");
   const { open } = useDrawer();
-
-  const { data, isLoading, isError } = usePopularMovies();
-
-  const listFilms = [
-    { title: "Titanic", src: "/titanic.png" },
-    { title: "Kill Bill", src: "/killbill.png" },
-    { title: "Dirty Dancing", src: "/dirtydancing.png" },
-    { title: "The Creator", src: "/thecreator.png" },
-  ];
+  const { data, isLoading } = usePopularMovies();
+  const { profile, isAuthenticated } = useAuth();
 
   return (
     <div
@@ -27,7 +17,14 @@ export default function Home() {
     >
       <div className="mt-8">
         <h1 className="text-primary font-merryweather flex gap-2 text-2xl">
-          Bon retour, <p className="text-yellow">{username}</p> !
+          {isAuthenticated && profile?.username ? (
+            <>
+              Bon retour,{" "}
+              <span className="text-yellow">{profile.username}</span> !
+            </>
+          ) : (
+            <>Bienvenue sur Cardbooxd</>
+          )}
         </h1>
         <p className="font-extralight text-sm">
           Voici l'activité pendant votre absence… <br />
@@ -43,13 +40,7 @@ export default function Home() {
         }
       >
         {data?.results.map((film) => (
-          <FilmCard
-            key={film.id}
-            movie={film}
-            
-            
-            
-          />
+          <FilmCard key={film.id} movie={film} />
         ))}
       </ScrollSection>
 
@@ -61,14 +52,7 @@ export default function Home() {
         }
       >
         {data?.results.map((film) => (
-          <FilmReview
-            date={""}
-            imageURL={film.poster_path || ""}
-            key={film.id}
-            persona="friend"
-            {...film}
-          
-          />
+          <FilmReview key={film.id} movie={film} persona="friend" />
         ))}
       </ScrollSection>
 
@@ -80,11 +64,7 @@ export default function Home() {
         }
       >
         {data?.results.map((film) => (
-          <FilmCard
-            key={film.id}
-            movie={film}
-            
-          />
+          <FilmCard key={film.id} movie={film} />
         ))}
       </ScrollSection>
     </div>
