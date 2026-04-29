@@ -1,6 +1,7 @@
 "use client";
 import AuthGate from "@/components/features/AuthGate";
 import FilmCard from "@/components/features/FilmCard";
+import ButtonInterract from "@/components/ui/ButtonInterract";
 import { useUserActivity } from "@/hooks/use-activity";
 import { useMovie } from "@/hooks/use-movies";
 import { Loader2, MessageSquare, Star } from "lucide-react";
@@ -10,11 +11,13 @@ function ActivityMovieItem({
   rating,
   comment,
   createdAt,
+  isLiked,
 }: {
   movieApiId: string;
-  rating: number;
+  rating?: number;
   comment?: string | null;
   createdAt: string;
+  isLiked?: boolean;
 }) {
   const { data: movie, isLoading } = useMovie(Number(movieApiId));
 
@@ -60,37 +63,46 @@ function ActivityMovieItem({
             {timeAgo(createdAt)}
           </p>
         </div>
-        <div className="flex items-center gap-1">
-          {Array.from({ length: 5 }, (_, i) => (
-            <Star
-              key={i}
-              className="size-3 text-yellow"
-              fill={i < rating ? "currentColor" : "none"}
-            />
-          ))}
-        </div>
-        {comment ? (
+
+        {isLiked ? (
+          <ButtonInterract
+            type="like"
+            isAlreadyAdded={true}
+            onClick={() => {}}
+          />
+        ) : (
+          <div className="flex items-center gap-1">
+            {Array.from({ length: 5 }, (_, i) => (
+              <Star
+                key={i}
+                className="size-3 text-yellow"
+                fill={i < (rating ?? 0) ? "currentColor" : "none"}
+              />
+            ))}
+          </div>
+        )}
+
+        {!isLiked && comment ? (
           <div className="flex gap-2 mt-1">
             <MessageSquare className="size-3 shrink-0 mt-0.5 text-primary/40" />
             <p className="text-sm text-primary/80 font-light">{comment}</p>
           </div>
-        ) : (
+        ) : !isLiked ? (
           <p className="text-xs text-primary/30 mt-1 italic">
             Pas de commentaire
           </p>
-        )}
+        ) : null}
       </div>
     </div>
   );
 }
 
 function ActivityContent() {
-  const { data: reviews, isLoading, isError, error } = useUserActivity();
-
-  console.log("reviews:", reviews);
-  console.log("isLoading:", isLoading);
-  console.log("isError:", isError);
-  console.log("error:", error);
+  const { data, isLoading } = useUserActivity();
+  const reviews = data?.reviews ?? [];
+  const liked = data?.liked ?? [];
+  console.log(liked);
+  console.log(reviews);
 
   return (
     <div className="px-4 md:px-32 py-8 text-primary font-krub flex flex-col gap-6">
@@ -107,7 +119,7 @@ function ActivityContent() {
         </div>
       )}
 
-      {!isLoading && reviews?.length === 0 && (
+      {!isLoading && reviews && reviews?.length === 0 && (
         <div className="text-primary/50 text-sm bg-background-800 rounded-md p-8 text-center">
           Aucune activité pour l'instant. Notez un film pour commencer !
         </div>
@@ -122,6 +134,19 @@ function ActivityContent() {
               rating={review.rating}
               comment={review.comment}
               createdAt={review.created_at ?? new Date().toISOString()}
+            />
+          ))}
+        </div>
+      )}
+
+      {!isLoading && liked && liked.length > 0 && (
+        <div className="flex flex-col gap-3">
+          {liked.map((item) => (
+            <ActivityMovieItem
+              key={item.id}
+              movieApiId={item.movie_api_id}
+              isLiked={true}
+              createdAt={item.updated_at ?? new Date().toISOString()}
             />
           ))}
         </div>
