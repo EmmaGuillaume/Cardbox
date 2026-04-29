@@ -109,7 +109,7 @@ export default function UserDrawerDesktop() {
             <Activity className="w-5 h-5 text-gray-400" />
             <span>Activité</span>
           </Link>
-          <ul className="flex flex-col gap-1 mt-1 ml-5 border-l border-white/10 pl-3">
+          {/* <ul className="flex flex-col gap-1 mt-1 ml-5 border-l border-white/10 pl-3">
             <li>
               <Link
                 href={`/profile/${userId}/activity`}
@@ -137,7 +137,7 @@ export default function UserDrawerDesktop() {
                 <span>J'aime</span>
               </Link>
             </li>
-          </ul>
+          </ul> */}
         </li>
       </ul>
 
